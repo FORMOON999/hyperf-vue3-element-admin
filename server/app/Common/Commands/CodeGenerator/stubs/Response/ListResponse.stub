@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace %NAMESPACE%;
+
+%USES%
+class %CLASS% extends BaseListResponse
+{
+    #[ApiModelProperty('列表')]
+    #[ArrayType(%NAME%::class)]
+    public array $list;
+}

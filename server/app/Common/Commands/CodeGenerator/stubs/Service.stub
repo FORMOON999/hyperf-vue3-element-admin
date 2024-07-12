@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types=1);
+
+namespace %NAMESPACE%;
+
+%USES%
+class %CLASS% implements %INHERITANCE%
+{
+
+    use ServiceTrait;
+
+    public function __construct(protected %MODEL% $%MODEL_NAME%)
+    {
+
+    }
+
+    public function getList(array $search, array $field = ['*'], array $withs = [], array $sort = [], array $page = []): Output
+    {
+        $query = $this->%MODEL_NAME%->buildQuery($search, $sort)->select($field);
+        if (! empty($withs)) {
+            $query->with(...$withs);
+        }
+        return $this->%MODEL_NAME%->output($query, $page);
+    }
+
+    public function create(array $data): int|string
+    {
+        $model = clone $this->%MODEL_NAME%;
+        $data = $this->check($data);
+        $model->fill($data);
+        $ret = $model->save();
+        return $ret ? $model->getKey() : 0;
+    }
+
+    public function modify(array $search, array $data): int
+    {
+        $data = $this->check($data, $search);
+        return (int) $this->%MODEL_NAME%->buildQuery($search)->first()?->update($data) ?? 0;
+    }
+
+    public function remove(array $search): ?bool
+    {
+        return $this->%MODEL_NAME%->buildQuery($search)->first()?->delete();
+    }
+
+    public function detail(array $search, array $field = ['*'], array $withs = [], array $sort = []): ?%MODEL_NAME_ENTITY%
+    {
+        $query = $this->%MODEL_NAME%->buildQuery($search, $sort)->select($field);
+        if (! empty($withs)) {
+            $query->with(...$withs);
+        }
+        return $query->first()?->newEntity();
+    }
+
+    public function getCacheById(string $id): ?%MODEL_NAME_ENTITY%
+    {
+        return $this->%MODEL_NAME%->findFromCacheByCustom($id, function ($id) {
+            return $this->%MODEL_NAME%->buildQuery(['id' => $id])->first();
+        })?->newEntity();
+    }
+
+    public function getCacheByIds(array $ids): Output
+    {
+        $result = $this->%MODEL_NAME%->findManyFromCacheByCustom($ids, function ($ids) {
+            return $this->%MODEL_NAME%->buildQuery(['id' => $ids])->get();
+        });
+        return $this->outputForCollection($result);
+    }
+
+    protected function check(array $data, array $search = []): array
+    {
+        return $data;
+    }
+}
