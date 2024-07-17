@@ -25,7 +25,7 @@ import {
   UploadFile,
   UploadProps,
 } from "element-plus";
-import FileAPI from "@/api/file";
+// import FileAPI from "@/api/file";
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -83,7 +83,8 @@ watch(
  */
 async function handleUpload(options: UploadRequestOptions): Promise<any> {
   // 上传API调用
-  const data = await FileAPI.upload(options.file);
+  // const data = await FileAPI.upload(options.file);
+  const data = {name: "aa", url : "a"}
 
   // 上传成功需手动替换文件路径为远程URL，否则图片地址为预览地址 blob:http://
   const fileIndex = fileList.value.findIndex(
@@ -108,13 +109,13 @@ function handleRemove(removeFile: UploadFile) {
   const filePath = removeFile.url;
 
   if (filePath) {
-    FileAPI.deleteByPath(filePath).then(() => {
-      // 删除成功回调
-      emit(
-        "update:modelValue",
-        fileList.value.map((file) => file.url)
-      );
-    });
+    // FileAPI.deleteByPath(filePath).then(() => {
+    //   // 删除成功回调
+    //   emit(
+    //     "update:modelValue",
+    //     fileList.value.map((file) => file.url)
+    //   );
+    // });
   }
 }
 

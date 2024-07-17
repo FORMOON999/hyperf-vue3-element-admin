@@ -1,0 +1,15 @@
+{
+  "name": "网站完整名称",
+  "short_name": "网站简称",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "网站描述",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

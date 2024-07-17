@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import * as echarts from "echarts";
-import StatsAPI, { VisitTrendVO, VisitTrendQuery } from "@/api/log";
+// import StatsAPI, { VisitTrendVO, VisitTrendQuery } from "@/api/log";
 
 const dataRange = ref(1);
 const chart: Ref<echarts.ECharts | null> = ref(null);
@@ -56,75 +56,75 @@ const props = defineProps({
   },
 });
 
-/** 设置图表  */
-const setChartOptions = (data: VisitTrendVO) => {
-  if (!chart.value) {
-    return;
-  }
-
-  const options = {
-    tooltip: {
-      trigger: "axis",
-    },
-    legend: {
-      data: ["浏览量(PV)", "IP"],
-      bottom: 0,
-    },
-    grid: {
-      left: "1%",
-      right: "5%",
-      bottom: "10%",
-      containLabel: true,
-    },
-    xAxis: {
-      type: "category",
-      data: data.dates,
-    },
-    yAxis: {
-      type: "value",
-      splitLine: {
-        show: true,
-        lineStyle: {
-          type: "dashed",
-        },
-      },
-    },
-    series: [
-      {
-        name: "浏览量(PV)",
-        type: "line",
-        data: data.pvList,
-        areaStyle: {
-          color: "rgba(64, 158, 255, 0.1)",
-        },
-        smooth: true,
-        itemStyle: {
-          color: "#409EFF",
-        },
-        lineStyle: {
-          color: "#409EFF",
-        },
-      },
-      {
-        name: "IP",
-        type: "line",
-        data: data.ipList,
-        areaStyle: {
-          color: "rgba(103, 194, 58, 0.1)",
-        },
-        smooth: true,
-        itemStyle: {
-          color: "#67C23A",
-        },
-        lineStyle: {
-          color: "#67C23A",
-        },
-      },
-    ],
-  };
-
-  chart.value.setOption(options);
-};
+// /** 设置图表  */
+// const setChartOptions = (data: VisitTrendVO) => {
+//   if (!chart.value) {
+//     return;
+//   }
+//
+//   const options = {
+//     tooltip: {
+//       trigger: "axis",
+//     },
+//     legend: {
+//       data: ["浏览量(PV)", "IP"],
+//       bottom: 0,
+//     },
+//     grid: {
+//       left: "1%",
+//       right: "5%",
+//       bottom: "10%",
+//       containLabel: true,
+//     },
+//     xAxis: {
+//       type: "category",
+//       data: data.dates,
+//     },
+//     yAxis: {
+//       type: "value",
+//       splitLine: {
+//         show: true,
+//         lineStyle: {
+//           type: "dashed",
+//         },
+//       },
+//     },
+//     series: [
+//       {
+//         name: "浏览量(PV)",
+//         type: "line",
+//         data: data.pvList,
+//         areaStyle: {
+//           color: "rgba(64, 158, 255, 0.1)",
+//         },
+//         smooth: true,
+//         itemStyle: {
+//           color: "#409EFF",
+//         },
+//         lineStyle: {
+//           color: "#409EFF",
+//         },
+//       },
+//       {
+//         name: "IP",
+//         type: "line",
+//         data: data.ipList,
+//         areaStyle: {
+//           color: "rgba(103, 194, 58, 0.1)",
+//         },
+//         smooth: true,
+//         itemStyle: {
+//           color: "#67C23A",
+//         },
+//         lineStyle: {
+//           color: "#67C23A",
+//         },
+//       },
+//     ],
+//   };
+//
+//   chart.value.setOption(options);
+// };
 
 /** 计算起止时间范围 */
 const calculateDateRange = () => {
@@ -150,19 +150,19 @@ const calculateDateRange = () => {
   return { startDate: formattedStartDate, endDate: formattedEndDate };
 };
 
-/** 加载数据 */
-const loadData = () => {
-  const { startDate, endDate } = calculateDateRange();
-  StatsAPI.getVisitTrend({
-    startDate,
-    endDate,
-  } as VisitTrendQuery).then((data) => {
-    setChartOptions(data);
-  });
-};
+// /** 加载数据 */
+// const loadData = () => {
+//   const { startDate, endDate } = calculateDateRange();
+//   StatsAPI.getVisitTrend({
+//     startDate,
+//     endDate,
+//   } as VisitTrendQuery).then((data) => {
+//     setChartOptions(data);
+//   });
+// };
 
 const handleDateRangeChange = () => {
-  loadData();
+  // loadData();
 };
 
 /** 下载图表 */
@@ -209,7 +209,7 @@ onMounted(() => {
   chart.value = markRaw(
     echarts.init(document.getElementById(props.id) as HTMLDivElement)
   );
-  loadData();
+  // loadData();
 
   window.addEventListener("resize", handleResize);
 });
