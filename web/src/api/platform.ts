@@ -72,21 +72,6 @@ class PlatformAPI {
   }
 
   /**
-   * 修改用户密码
-   *
-   * @param id 用户ID
-   * @param password 新密码
-   * @returns 请求结果
-   */
-  static updatePassword(id: number, password: string) {
-    return request({
-      url: `${PLATFORM_BASE_URL}/${id}/password`,
-      method: "patch",
-      params: { password: password },
-    });
-  }
-
-  /**
    * 批量删除用户，多个以英文逗号(,)分割
    *
    * @param ids 用户ID字符串，多个以英文逗号(,)分割
@@ -96,55 +81,6 @@ class PlatformAPI {
     return request({
       url: `${PLATFORM_BASE_URL}/${ids}`,
       method: "delete",
-    });
-  }
-
-  /**
-   * 下载用户导入模板
-   *
-   * @returns 用户导入模板文件
-   */
-  static downloadTemplate() {
-    return request({
-      url: `${PLATFORM_BASE_URL}/template`,
-      method: "get",
-      responseType: "arraybuffer",
-    });
-  }
-
-  /**
-   * 导出用户
-   *
-   * @param queryParams 查询参数
-   * @returns 导出文件
-   */
-  static export(queryParams: PlatformQuery) {
-    return request({
-      url: `${PLATFORM_BASE_URL}/export`,
-      method: "get",
-      params: queryParams,
-      responseType: "arraybuffer",
-    });
-  }
-
-  /**
-   * 导入用户
-   *
-   * @param deptId 部门ID
-   * @param file 导入文件
-   * @returns 请求结果
-   */
-  static import(deptId: number, file: File) {
-    const formData = new FormData();
-    formData.append("file", file);
-    return request({
-      url: `${PLATFORM_BASE_URL}/import`,
-      method: "post",
-      params: { deptId: deptId },
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
     });
   }
 }

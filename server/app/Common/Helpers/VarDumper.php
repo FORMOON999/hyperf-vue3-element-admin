@@ -284,4 +284,37 @@ class VarDumper
 
         return implode('', $closureTokens);
     }
+
+    private static function dumpTsInternal($value): string
+    {
+        if (is_int($value)) {
+            return 'number';
+        } elseif (is_string($value)) {
+            return 'string';
+        } elseif (is_bool($value)) {
+            return 'boolean';
+        } elseif (is_array($value)) {
+            if (array_keys($value) === range(0, count($value) - 1)) {
+                // Sequential array
+                return self::dumpTsInternal($value[0]) . '[]';
+            } else {
+                // Associative array
+                return '{ [key: string]: ' . self::dumpTsInternal(reset($value)) . ' }';
+            }
+        }
+        return 'any';
+    }
+
+    public static function exportTs(array $array, string $interfaceName): string
+    {
+        $tsInterface = "export interface $interfaceName {\n";
+
+        foreach ($array as $key => $value) {
+            $type = self::dumpTsInternal($value);
+            $tsInterface .= "    $key: $type;\n";
+        }
+
+        $tsInterface .= "}\n";
+        return $tsInterface;
+    }
 }

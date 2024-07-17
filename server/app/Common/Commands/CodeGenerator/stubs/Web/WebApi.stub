@@ -1,0 +1,94 @@
+import request from "@/utils/request";
+
+const %URI_NAME% = "%URI%";
+
+class %NAME%API {
+  /**
+   * 获取%COMMENT%分页列表
+   *
+   * @param queryParams 查询参数
+   * @returns %COMMENT%分页列表
+   */
+  static getPage(queryParams: %NAME%Query) {
+    return request<any, PageResult<%NAME%PageVO[]>>({
+      url: `${%URI_NAME%}`,
+      method: "get",
+      params: queryParams,
+    });
+  }
+
+  /**
+   * 获取%COMMENT%表单详情
+   *
+   * @param id %COMMENT%ID
+   * @returns %COMMENT%表单详情
+   */
+  static getFormData(id: number) {
+    return request<any, %NAME%Form>({
+      url: `${%URI_NAME%}/${id}`,
+      method: "get",
+    });
+  }
+
+  /**
+   * 添加%COMMENT%
+   *
+   * @param data %COMMENT%表单数据
+   * @returns 请求结果
+   */
+  static add(data: %NAME%Form) {
+    return request({
+      url: `${%URI_NAME%}`,
+      method: "post",
+      data: data,
+    });
+  }
+
+  /**
+   * 修改%COMMENT%
+   *
+   * @param id %COMMENT%ID
+   * @param data %COMMENT%表单数据
+   * @returns 请求结果
+   */
+  static update(id: number, data: %NAME%Form) {
+    return request({
+      url: `${%URI_NAME%}/${id}`,
+      method: "put",
+      data: data,
+    });
+  }
+
+  /**
+   * 批量删除%COMMENT%，多个以英文逗号(,)分割
+   *
+   * @param ids %COMMENT%ID字符串，多个以英文逗号(,)分割
+   * @returns 请求结果
+   */
+  static deleteByIds(ids: string) {
+    return request({
+      url: `${%URI_NAME%}/${ids}`,
+      method: "delete",
+    });
+  }
+}
+
+export default %NAME%API;
+
+/**
+ * 查询对象类型
+ */
+export interface %NAME%Query extends PageQuery {
+  startTime?: string;
+  endTime?: string;
+}
+
+/**
+ * %COMMENT%分页对象
+ */
+%PAGE_VO%
+
+/**
+ * %COMMENT%表单类型
+ */
+%FORM%

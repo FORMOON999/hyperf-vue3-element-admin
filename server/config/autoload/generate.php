@@ -21,4 +21,10 @@ return [
     'modules' => [],
     // 模式  reset or post
     'mode' => 'reset',
+    // web 文件生成
+    'web' => [
+        'enable' => true,
+        'path' => dirname(BASE_PATH) . '/web',
+        'application' => 'admin'
+    ]
 ];

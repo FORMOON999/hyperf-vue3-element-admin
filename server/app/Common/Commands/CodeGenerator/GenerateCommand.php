@@ -24,6 +24,8 @@ use App\Common\Commands\CodeGenerator\Generator\Response\GeneratorDetailResponse
 use App\Common\Commands\CodeGenerator\Generator\Response\GeneratorListResponse;
 use App\Common\Commands\CodeGenerator\Generator\ServiceGenerator;
 use App\Common\Commands\CodeGenerator\Generator\ServiceInterfaceGenerator;
+use App\Common\Commands\CodeGenerator\Generator\Web\ApiWeb;
+use App\Common\Commands\CodeGenerator\Generator\Web\ViewWeb;
 use Hyperf\Command\Annotation\Command;
 use Hyperf\Command\Command as HyperfCommand;
 use Hyperf\Dag\Dag;
@@ -34,6 +36,7 @@ use Symfony\Component\Console\Input\InputOption;
 /*x
  * @Command
  */
+
 #[Command]
 class GenerateCommand extends HyperfCommand
 {
@@ -112,12 +115,13 @@ class GenerateCommand extends HyperfCommand
         $modules = \Hyperf\Config\config('generate.modules', []);
         if (empty($modules)) {
             foreach ($models as $model) {
-                if (! in_array($model->module, $modules)) {
+                if (!in_array($model->module, $modules)) {
                     $modules[] = $model->module;
                 }
             }
         }
 
+        $webConfig = \Hyperf\Config\config('generate.web', ['enable' => false, 'path' => '', 'application' => '']);
         foreach ($models as $model) {
             $condition = [
                 'modelInfo' => $model,
@@ -162,9 +166,17 @@ class GenerateCommand extends HyperfCommand
                 ->addEdge($removeRequest, $controller)
                 ->addEdge($getListResponse, $controller)
                 ->addEdge($detailResponse, $controller)
-                ->addEdge($service, $controller)
+                ->addEdge($service, $controller);
 //                ->addEdge($logic, $controller)
-                ->run();
+            if ($webConfig['enable']) {
+                $webApi = Vertex::of(new ApiWeb(array_merge($condition, ['webConfig' => $webConfig])), 'webApi');
+                $webView = Vertex::of(new ViewWeb(array_merge($condition, ['webConfig' => $webConfig])), 'webView');
+                $dag->addVertex($webView)
+                    ->addVertex($webApi)
+                    ->addEdge($controller, $webApi)
+                    ->addEdge($webApi, $webView);
+            }
+            $dag->run();
         }
     }
 
