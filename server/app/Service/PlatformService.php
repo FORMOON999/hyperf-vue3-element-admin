@@ -33,7 +33,7 @@ class PlatformService implements PlatformInterface
         $query = $this->platform->newQuery()
             ->betweenTime('created_at', $search)
             ->whereLike('username', $search)
-            ->whereCondition('status', $search, '>')
+            ->whereCondition('status', $search)
             ->whereSearch($search)
             ->sorts($sort)
             ->select($field);
