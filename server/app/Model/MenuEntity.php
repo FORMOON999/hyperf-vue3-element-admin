@@ -18,7 +18,8 @@ use App\Constants\Type\MenuType;
 use Hyperf\ApiDocs\Annotation\ApiModelProperty;
 
 /**
- * Class MenuEntity.
+ * Class MenuEntity
+ * @package App\Model
  */
 class MenuEntity extends BaseModelEntity
 {

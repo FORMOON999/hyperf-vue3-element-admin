@@ -10,6 +10,5 @@ use Hyperf\ApiDocs\Annotation\ApiModelProperty;
 
 class PlatformDetailResponse extends PlatformEntity
 {
-    #[ApiModelProperty(value: '角色'), ArrayType(type: 'string')]
-    public array $roleNames;
+
 }

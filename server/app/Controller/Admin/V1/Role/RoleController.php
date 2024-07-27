@@ -15,8 +15,9 @@ namespace App\Controller\Admin\V1\Role;
 use App\Common\Constants\BaseStatus;
 use App\Common\Core\BaseController;
 use App\Common\Core\Entity\BaseSuccessResponse;
+use App\Common\Core\Entity\CommonResponse;
+use App\Common\Entity\Options;
 use App\Common\Exceptions\BusinessException;
-use App\Common\Helpers\Arrays\ArrayHelper;
 use App\Common\Middleware\AdminMiddleware;
 use App\Constants\Errors\RoleError;
 use App\Controller\Admin\V1\Role\Request\RoleCreateRequest;
@@ -29,17 +30,18 @@ use App\Infrastructure\RoleMenuInterface;
 use Hyperf\ApiDocs\Annotation\Api;
 use Hyperf\ApiDocs\Annotation\ApiHeader;
 use Hyperf\ApiDocs\Annotation\ApiOperation;
+use Hyperf\ApiDocs\Annotation\ApiResponse;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\DTO\Annotation\Contracts\RequestFormData;
 use Hyperf\DTO\Annotation\Contracts\RequestQuery;
 use Hyperf\DTO\Annotation\Contracts\Valid;
+use Hyperf\DTO\Type\PhpType;
 use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Annotation\DeleteMapping;
 use Hyperf\HttpServer\Annotation\GetMapping;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use Hyperf\HttpServer\Annotation\PutMapping;
-use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 #[Controller(prefix: 'api/v1/admin/role')]
 #[Api(tags: 'Admin/角色管理管理')]
@@ -55,15 +57,13 @@ class RoleController extends BaseController
 
     #[GetMapping(path: 'options')]
     #[ApiOperation('角色下拉数据源')]
-    public function options(): PsrResponseInterface
+    #[ApiResponse(new CommonResponse(['data' => [Options::class]]))]
+    public function options()
     {
         $roles = $this->role->getList(['status' => BaseStatus::NORMAL], ['id', 'name'], [], ['sort' => 'asc']);
         $data = [];
         foreach ($roles->list as $item) {
-            $data[] = [
-                'label' => $item->name,
-                'value' => $item->id,
-            ];
+            $data[] = new Options($item->name, $item->id);
         }
         return $this->response->success($data);
     }
@@ -96,7 +96,7 @@ class RoleController extends BaseController
     {
         $result = $this->role->create($request->setUnderlineName()->toArray());
         if (! $result) {
-            throw new BusinessException(RoleError::CREATE_ERROR());
+            throw new BusinessException(RoleError::CREATE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -110,7 +110,7 @@ class RoleController extends BaseController
             $request->setUnderlineName()->toArray()
         );
         if (! $result) {
-            throw new BusinessException(RoleError::UPDATE_ERROR());
+            throw new BusinessException(RoleError::UPDATE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -121,7 +121,7 @@ class RoleController extends BaseController
     {
         $result = $this->role->remove(['id' => explode(',', $ids)]);
         if (! $result) {
-            throw new BusinessException(RoleError::DELETE_ERROR());
+            throw new BusinessException(RoleError::DELETE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -141,14 +141,15 @@ class RoleController extends BaseController
             ],
         );
         if (! $result) {
-            throw new BusinessException(RoleError::NOT_FOUND());
+            throw new BusinessException(RoleError::NOT_FOUND);
         }
         return new RoleDetailResponse($result);
     }
 
     #[GetMapping(path: 'menuId/{id}')]
     #[ApiOperation('获取角色菜单ids')]
-    public function menuId(string $id): PsrResponseInterface
+    #[ApiResponse(new CommonResponse(['data' => [PhpType::INT]]))]
+    public function menuId(string $id)
     {
         $result = $this->roleMenu->getList([
             'role_id' => $id,

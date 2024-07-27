@@ -68,7 +68,7 @@ class LoginController extends BaseController
     {
         $code = $this->aesHelper->decrypt($request->captchaKey);
         if ($code !== $request->captchaCode) {
-            throw new BusinessException(PlatformError::CAPTCHA_ERROR());
+            throw new BusinessException(PlatformError::CAPTCHA_ERROR);
         }
         $result = $this->platform->login($request->username, $request->password);
         $token = $this->login->makeToke((string) $result->id, AdminMiddleware::getIss());

@@ -28,7 +28,7 @@ class MenuCreateRequest extends BaseObject
     #[ApiModelProperty(value: '菜单名称', required: true), Required]
     public string $name;
 
-    #[ApiModelProperty(value: '菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)', required: true), Required]
+    #[ApiModelProperty(value: '菜单类型(CATALOG-菜单；MENU-目录；BUTTON-按钮；EXTLINK-外链)', required: true), Required]
     public MenuType $type;
 
     #[ApiModelProperty(value: '路由路径')]

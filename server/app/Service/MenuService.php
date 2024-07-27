@@ -14,6 +14,7 @@ namespace App\Service;
 
 use App\Common\Core\Entity\Output;
 use App\Common\Core\ServiceTrait;
+use App\Controller\Admin\V1\Menu\Response\MenuDetailResponse;
 use App\Infrastructure\MenuInterface;
 use App\Model\Menu;
 use App\Model\MenuEntity;
@@ -30,9 +31,10 @@ class MenuService implements MenuInterface
         $data = [];
         foreach ($result->list as $item) {
             $search['parent_id'] = $item->id;
-            $item->routeName = $item->name;
-            $item->children = $this->getList($search);
-            $data[] = $item->toArray();
+            $response = new MenuDetailResponse($item);
+            $response->routeName = $item->name;
+            $response->children = $this->getList($search);
+            $data[] = $response;
         }
         return $data;
     }
@@ -92,7 +94,7 @@ class MenuService implements MenuInterface
             $meta = [
                 'title' => $top->name,
                 'icon' => $top->icon,
-                'hidden' => ! $top->visible->getValue(),
+                'hidden' => ! $top->visible->value,
                 'alwaysShow' => (bool) $top->alwaysShow,
                 'params' => $top->params,
             ];
@@ -191,7 +193,7 @@ class MenuService implements MenuInterface
             $meta = [
                 'title' => $data->name,
                 'icon' => $data->icon,
-                'hidden' => ! $data->visible->getValue(),
+                'hidden' => ! $data->visible->value,
                 'keepAlive' => (bool) $data->keepAlive,
                 'alwaysShow' => (bool) $data->alwaysShow,
                 'params' => $data->params,

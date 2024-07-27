@@ -18,7 +18,7 @@
         "ext-json": "*",
         "ext-zip": "*",
         "ext-simplexml": "*",
-        "hashwallet/hyperf-jwt": "dev-master",
+        "hashwallet/hyperf-jwt": "3.1.x-dev",
         "hyperf/async-queue": "~3.1.0",
         "hyperf/cache": "~3.1.0",
         "hyperf/command": "~3.1.0",
@@ -37,6 +37,7 @@
         "hyperf/redis": "~3.1.0",
         "hyperf/signal": "~3.1.0",
         "hyperf/snowflake": "~3.1.0",
+        "sunsgne/hyperf-captcha": "^0.0.2",
         "tangwei/apidocs": "*"
     },
     "require-dev": {

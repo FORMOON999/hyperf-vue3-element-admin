@@ -112,7 +112,7 @@ class PlatformController extends BaseController
                     $roleName[] = $roleNames[$rid];
                 }
             }
-            $result->list[$key]->roleName = $roleName;
+            $result->list[$key]->roleNames = $roleName;
         }
         return new PlatformListResponse($result);
     }
@@ -123,7 +123,7 @@ class PlatformController extends BaseController
     {
         $result = $this->platform->create($request->setUnderlineName()->toArray());
         if (! $result) {
-            throw new BusinessException(PlatformError::CREATE_ERROR());
+            throw new BusinessException(PlatformError::CREATE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -137,7 +137,7 @@ class PlatformController extends BaseController
             $request->setUnderlineName()->toArray()
         );
         if (! $result) {
-            throw new BusinessException(PlatformError::UPDATE_ERROR());
+            throw new BusinessException(PlatformError::UPDATE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -148,7 +148,7 @@ class PlatformController extends BaseController
     {
         $result = $this->platform->remove(['id' => explode(',', $ids)]);
         if (! $result) {
-            throw new BusinessException(PlatformError::DELETE_ERROR());
+            throw new BusinessException(PlatformError::DELETE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -167,7 +167,7 @@ class PlatformController extends BaseController
             ],
         );
         if (! $result) {
-            throw new BusinessException(PlatformError::NOT_FOUND());
+            throw new BusinessException(PlatformError::NOT_FOUND);
         }
         return new PlatformDetailResponse($result);
     }

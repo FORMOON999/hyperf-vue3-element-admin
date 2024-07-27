@@ -5,6 +5,7 @@ namespace App\Common\Core\Entity;
 
 use App\Common\Core\BaseObject;
 use Hyperf\ApiDocs\Annotation\ApiModelProperty;
+use Hyperf\ApiDocs\Annotation\ApiVariable;
 
 class CommonResponse extends BaseObject
 {
@@ -14,6 +15,6 @@ class CommonResponse extends BaseObject
     #[ApiModelProperty('信息')]
     public string $msg = '';
 
-    #[ApiModelProperty('响应数据')]
+    #[ApiModelProperty('响应数据'), ApiVariable]
     public mixed $data;
 }

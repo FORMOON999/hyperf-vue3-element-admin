@@ -13,19 +13,21 @@ declare(strict_types=1);
 namespace App\Constants\Type;
 
 use App\Common\Core\Enum\Annotation\EnumMessage;
-use App\Common\Core\Enum\BaseEnum;
+use App\Common\Core\Enum\EnumMessageTrait;
 
-class MenuType extends BaseEnum
+enum MenuType: string
 {
+    use EnumMessageTrait;
+
     #[EnumMessage(message: '菜单')]
-    public const MENU = 'MENU';
+    case MENU = 'MENU';
 
     #[EnumMessage(message: '目录')]
-    public const CATALOG = 'CATALOG';
+    case CATALOG = 'CATALOG';
 
     #[EnumMessage(message: '外链')]
-    public const EXT_LINK = 'EXTLINK';
+    case EXT_LINK = 'EXTLINK';
 
     #[EnumMessage(message: '按钮权限')]
-    public const BUTTON = 'BUTTON';
+    case BUTTON = 'BUTTON';
 }

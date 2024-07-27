@@ -29,7 +29,7 @@ class %CLASS%
     {
         $result = $this->%SERVICE_NAME%->create($request->setUnderlineName()->toArray());
         if (! $result) {
-            throw new BusinessException(%ERROR%::CREATE_ERROR());
+            throw new BusinessException(%ERROR%::CREATE_ERROR);
         }
         return new BaseSuccessResponse();
     }
@@ -41,7 +41,7 @@ class %CLASS%
             $request->setUnderlineName()->toArray()
         );
         if (! $result) {
-            throw new BusinessException(%ERROR%::UPDATE_ERROR());
+            throw new BusinessException(%ERROR%::UPDATE_ERROR);
         }
         return new BaseSuccessResponse();
     }
@@ -50,7 +50,7 @@ class %CLASS%
     {
         $result = $this->%SERVICE_NAME%->remove($request->toArray());
         if (! $result) {
-            throw new BusinessException(%ERROR%::DELETE_ERROR());
+            throw new BusinessException(%ERROR%::DELETE_ERROR);
         }
         return new BaseSuccessResponse();
     }
@@ -62,7 +62,7 @@ class %CLASS%
             %FILED%,
         );
         if (! $result) {
-            throw new BusinessException(%ERROR%::NOT_FOUND());
+            throw new BusinessException(%ERROR%::NOT_FOUND);
         }
         return new %DETAIL_RESPONSE%($result);
     }

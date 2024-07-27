@@ -80,16 +80,16 @@ class PlatformService implements PlatformInterface
             'status',
         ]);
         if (empty($platform)) {
-            throw new BusinessException(PlatformError::ACCOUNT_OR_PASSWORD_NOT_FOUND());
+            throw new BusinessException(PlatformError::ACCOUNT_OR_PASSWORD_NOT_FOUND);
         }
 
         if (! PasswordHelper::verifyPassword($password, $platform->password)) {
-            throw new BusinessException(PlatformError::ACCOUNT_OR_PASSWORD_NOT_FOUND());
+            throw new BusinessException(PlatformError::ACCOUNT_OR_PASSWORD_NOT_FOUND);
         }
 
         // 状态
-        if ($platform->status !== BaseStatus::NORMAL()) {
-            throw new BusinessException(PlatformError::FROZEN());
+        if ($platform->status !== BaseStatus::NORMAL) {
+            throw new BusinessException(PlatformError::FROZEN);
         }
 
         $this->modify(['id' => $platform->id], ['last_time' => date('Y-m-d H:i:s')]);

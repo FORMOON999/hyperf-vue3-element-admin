@@ -23,7 +23,7 @@ use Hyperf\Database\Model\Relations\BelongsToMany;
  * @property string $deleted_at 删除时间
  * @property int $parent_id 父级
  * @property string $name 菜单名称
- * @property int $type 菜单类型(1-菜单；2-目录；3-外链；4-按钮权限)
+ * @property string $type 菜单类型(CATALOG-菜单；MENU-目录；BUTTON-按钮；EXTLINK-外链)
  * @property string $path 路由路径
  * @property string $component 组件路径(vue页面完整路径，省略.vue后缀)
  * @property string $perm 权限标识
@@ -38,22 +38,27 @@ use Hyperf\Database\Model\Relations\BelongsToMany;
 class Menu extends BaseModel
 {
     /**
-     * primaryKey.
+     * primaryKey
+     *
+     * @var string
      */
     protected string $primaryKey = 'id';
-
     /**
      * The table associated with the model.
+     *
+     * @var string
      */
     protected ?string $table = 'menu';
-
     /**
      * The attributes that are mass assignable.
+     *
+     * @var array
      */
     protected array $fillable = ['id', 'created_at', 'updated_at', 'deleted_at', 'parent_id', 'name', 'type', 'path', 'component', 'perm', 'sort', 'visible', 'icon', 'redirect', 'always_show', 'keep_alive', 'params'];
-
     /**
      * The attributes that should be cast to native types.
+     *
+     * @var array
      */
     protected array $casts = ['id' => 'integer', 'parent_id' => 'integer', 'sort' => 'integer', 'visible' => 'integer', 'always_show' => 'integer', 'keep_alive' => 'integer', 'params' => 'json'];
 

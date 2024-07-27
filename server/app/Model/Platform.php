@@ -23,29 +23,37 @@ use App\Common\Core\Entity\BaseModelEntity;
  * @property string $username 账号
  * @property string $password 密码
  * @property string $avatar 头像
- * @property string $role 角色
+ * @property string $role_id 角色
  * @property int $status 状态
  * @property string $last_time 上次登录时间
  */
 class Platform extends BaseModel
 {
     /**
-     * primaryKey.
+     * primaryKey
+     *
+     * @var string
      */
     protected string $primaryKey = 'id';
 
     /**
      * The table associated with the model.
+     *
+     * @var string
      */
     protected ?string $table = 'platform';
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var array
      */
     protected array $fillable = ['id', 'created_at', 'updated_at', 'deleted_at', 'username', 'password', 'avatar', 'role_id', 'status', 'last_time'];
 
     /**
      * The attributes that should be cast to native types.
+     *
+     * @var array
      */
     protected array $casts = ['id' => 'integer', 'status' => 'integer', 'role_id' => 'json'];
 

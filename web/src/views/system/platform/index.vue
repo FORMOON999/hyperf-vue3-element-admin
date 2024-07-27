@@ -85,10 +85,10 @@
         />
 
         <el-table-column
-          key="roleName"
+          key="roleNames"
           label="角色"
           align="center"
-          prop="roleName"
+          prop="roleNames"
         />
 
         <el-table-column label="状态" align="center" prop="status">

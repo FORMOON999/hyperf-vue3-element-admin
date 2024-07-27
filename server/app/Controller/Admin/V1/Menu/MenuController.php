@@ -14,6 +14,7 @@ namespace App\Controller\Admin\V1\Menu;
 
 use App\Common\Core\BaseController;
 use App\Common\Core\Entity\BaseSuccessResponse;
+use App\Common\Core\Entity\CommonResponse;
 use App\Common\Exceptions\BusinessException;
 use App\Common\Middleware\AdminMiddleware;
 use App\Constants\Errors\MenuError;
@@ -25,6 +26,7 @@ use App\Infrastructure\MenuInterface;
 use Hyperf\ApiDocs\Annotation\Api;
 use Hyperf\ApiDocs\Annotation\ApiHeader;
 use Hyperf\ApiDocs\Annotation\ApiOperation;
+use Hyperf\ApiDocs\Annotation\ApiResponse;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\DTO\Annotation\Contracts\RequestFormData;
 use Hyperf\DTO\Annotation\Contracts\RequestQuery;
@@ -35,7 +37,6 @@ use Hyperf\HttpServer\Annotation\GetMapping;
 use Hyperf\HttpServer\Annotation\Middleware;
 use Hyperf\HttpServer\Annotation\PostMapping;
 use Hyperf\HttpServer\Annotation\PutMapping;
-use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 #[Controller(prefix: 'api/v1/admin/menu')]
 #[Api(tags: 'Admin/菜单管理管理')]
@@ -48,7 +49,8 @@ class MenuController extends BaseController
 
     #[GetMapping(path: 'routes')]
     #[ApiOperation('路由列表')]
-    public function routes(): PsrResponseInterface
+    #[ApiResponse(new CommonResponse(['data' => []]))]
+    public function routes()
     {
         $result = $this->menu->routes($this->request->getAttribute('roleId'));
         return $this->response->success($result);
@@ -56,7 +58,8 @@ class MenuController extends BaseController
 
     #[GetMapping(path: 'options')]
     #[ApiOperation('角色下拉数据源')]
-    public function options(): PsrResponseInterface
+    #[ApiResponse(new CommonResponse(['data' => []]))]
+    public function options()
     {
         $result = $this->menu->options();
         return $this->response->success($result);
@@ -64,7 +67,8 @@ class MenuController extends BaseController
 
     #[GetMapping(path: '')]
     #[ApiOperation('获取菜单管理列表')]
-    public function getList(#[Valid] #[RequestQuery] MenuListRequest $request): PsrResponseInterface
+    #[ApiResponse(new CommonResponse(['data' => [new MenuDetailResponse]]))]
+    public function getList(#[Valid] #[RequestQuery] MenuListRequest $request)
     {
         $result = $this->menu->getList(
             $request->toArray(),
@@ -78,7 +82,7 @@ class MenuController extends BaseController
     {
         $result = $this->menu->create($request->setUnderlineName()->toArray());
         if (! $result) {
-            throw new BusinessException(MenuError::CREATE_ERROR());
+            throw new BusinessException(MenuError::CREATE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -92,7 +96,7 @@ class MenuController extends BaseController
             $request->setUnderlineName()->toArray()
         );
         if (! $result) {
-            throw new BusinessException(MenuError::UPDATE_ERROR());
+            throw new BusinessException(MenuError::UPDATE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -103,7 +107,7 @@ class MenuController extends BaseController
     {
         $result = $this->menu->remove(['id' => explode(',', $ids)]);
         if (! $result) {
-            throw new BusinessException(MenuError::DELETE_ERROR());
+            throw new BusinessException(MenuError::DELETE_ERROR);
         }
         return new BaseSuccessResponse($result);
     }
@@ -134,7 +138,7 @@ class MenuController extends BaseController
             ],
         );
         if (! $result) {
-            throw new BusinessException(MenuError::NOT_FOUND());
+            throw new BusinessException(MenuError::NOT_FOUND);
         }
         $response = new MenuDetailResponse($result);
         $response->routeName = ucfirst($response->path);

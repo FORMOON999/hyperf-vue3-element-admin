@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Common\Constants\BaseStatus;
+use App\Common\Core\Annotation\ArrayType;
 use App\Common\Core\Entity\BaseModelEntity;
 use Hyperf\ApiDocs\Annotation\ApiModelProperty;
 
@@ -30,11 +31,11 @@ class PlatformEntity extends BaseModelEntity
     #[ApiModelProperty(value: '头像')]
     public string $avatar;
 
-    #[ApiModelProperty(value: '角色id')]
+    #[ApiModelProperty(value: '角色id'), ArrayType(type: 'int')]
     public array $roleId;
 
-    #[ApiModelProperty(value: '角色名称')]
-    public array $roleName;
+    #[ApiModelProperty(value: '角色名称'), ArrayType(type: 'string')]
+    public array $roleNames;
 
     #[ApiModelProperty(value: '状态')]
     public BaseStatus $status;
