@@ -16,21 +16,21 @@ use App\Common\Core\Enum\Annotation\EnumMessage;
 use App\Common\Core\Enum\EnumMessageTrait;
 
 /**
- * 是否.
+ * 排序方式.
  */
-enum WhetherStatus: int
+enum SortType: string
 {
     use EnumMessageTrait;
 
     /**
-     * @Message("是")
+     * @Message("正序")
      */
-    #[EnumMessage('是')]
-    case YES = 1;
+    #[EnumMessage(message: '正序')]
+    case ASC = 'asc';
 
     /**
-     * @Message("否")
+     * @Message("倒序")
      */
-    #[EnumMessage('否')]
-    case NO = 0;
+    #[EnumMessage(message: '倒序')]
+    case DESC = 'desc';
 }
