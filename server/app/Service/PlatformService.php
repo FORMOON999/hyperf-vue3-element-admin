@@ -58,9 +58,9 @@ class PlatformService implements PlatformInterface
         return (int) $this->platform->buildQuery($search)->first()?->update($data) ?? 0;
     }
 
-    public function remove(array $search): ?bool
+    public function remove(array $search): int
     {
-        return $this->platform->buildQuery($search)->first()?->delete();
+        return $this->platform->buildQuery($search)->delete();
     }
 
     public function detail(array $search, array $field = ['*'], array $withs = [], array $sort = []): ?PlatformEntity

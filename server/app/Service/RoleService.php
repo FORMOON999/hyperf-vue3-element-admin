@@ -52,9 +52,9 @@ class RoleService implements RoleInterface
         return $this->role->buildQuery($search)->update($data);
     }
 
-    public function remove(array $search): ?bool
+    public function remove(array $search): int
     {
-        return $this->role->buildQuery($search)->first()?->delete();
+        return $this->role->buildQuery($search)->delete();
     }
 
     public function detail(array $search, array $field = ['*'], array $withs = [], array $sort = []): ?RoleEntity

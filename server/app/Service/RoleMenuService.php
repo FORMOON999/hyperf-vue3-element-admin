@@ -58,9 +58,9 @@ class RoleMenuService implements RoleMenuInterface
         return $this->roleMenu->buildQuery($search)->update($data);
     }
 
-    public function remove(array $search): ?bool
+    public function remove(array $search): int
     {
-        return (bool) $this->roleMenu->buildQuery($search)->forceDelete();
+        return $this->roleMenu->buildQuery($search)->forceDelete();
     }
 
     public function detail(array $search, array $field = ['*'], array $withs = [], array $sort = []): ?RoleMenuEntity

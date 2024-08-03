@@ -54,9 +54,9 @@ class MenuService implements MenuInterface
         return (int) $this->menu->buildQuery($search)->first()?->update($data);
     }
 
-    public function remove(array $search): ?bool
+    public function remove(array $search): int
     {
-        return $this->menu->buildQuery($search)->first()?->delete();
+        return $this->menu->buildQuery($search)->delete();
     }
 
     public function detail(array $search, array $field = ['*'], array $withs = [], array $sort = []): ?MenuEntity

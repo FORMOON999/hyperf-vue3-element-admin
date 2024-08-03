@@ -15,7 +15,7 @@ interface RoleMenuInterface
 
     public function modify(array $search, array $data): int;
 
-    public function remove(array $search): ?bool;
+    public function remove(array $search): int;
 
     public function detail(array $search, array $field = ['*'], array $withs = [], array $sort = []): ?RoleMenuEntity;
 
