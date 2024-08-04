@@ -26,5 +26,12 @@ return [
         'enable' => true,
         'path' => dirname(BASE_PATH) . '/web',
         'application' => 'admin'
-    ]
+    ],
+    'ignore_code' => [
+        'menu',
+        'migrations',
+        'platform',
+        'role',
+        'role_menu'
+    ],
 ];
