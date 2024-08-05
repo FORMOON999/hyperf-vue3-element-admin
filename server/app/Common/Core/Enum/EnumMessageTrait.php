@@ -29,6 +29,18 @@ trait EnumMessageTrait
         return $translator->trans($message, $replace, $locale);
     }
 
+    public static function options(): array
+    {
+        $data = [];
+        foreach (self::cases() as $item) {
+            $data[] = [
+                'label' => $item->getMessage(),
+                'value' => $item->value,
+            ];
+        }
+        return $data;
+    }
+
     protected function handleMessage(array $replace = []): string
     {
         $message = '';

@@ -74,18 +74,19 @@ class ModelCacheBuilder extends ModelBuilder
     {
         $startTime = ArrayHelper::remove($data, 'start_time', '');
         $endTime = ArrayHelper::remove($data, 'end_time', '');
+        if (! empty($endTime)) {
+            $endTime .= ' 23:59:59';
+        }
         if ($startTime && $endTime) {
             $this->query->whereBetween($field, [$startTime, $endTime]);
             return $this;
         }
-
         if ($startTime) {
             $this->query->where($field, '>=', $startTime);
         }
         if ($endTime) {
             $this->query->where($field, '<', $endTime);
         }
-
         return $this;
     }
 
