@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace App\Common\Util\PhpGenerator;
 
 use App\Common\Util\PhpGenerator\Printer\PrinterFactory;
@@ -31,19 +41,16 @@ class Method extends Base
      */
     private $content;
 
-    /**
-     * @return bool
-     */
+    public function __toString(): string
+    {
+        return PrinterFactory::getInstance()->getPrinter($this->getVersion())->printMethod($this);
+    }
+
     public function getFinal(): bool
     {
         return $this->final;
     }
 
-    /**
-     * @param bool $final
-     *
-     * @return Method
-     */
     public function setFinal(bool $final = true): Method
     {
         $this->final = $final;
@@ -60,8 +67,6 @@ class Method extends Base
 
     /**
      * @param Params[] $params
-     *
-     * @return Method
      */
     public function setParams(array $params): Method
     {
@@ -79,8 +84,6 @@ class Method extends Base
 
     /**
      * @param mixed $return
-     *
-     * @return Method
      */
     public function setReturn($return): Method
     {
@@ -89,8 +92,6 @@ class Method extends Base
     }
 
     /**
-     * @param Params $params
-     *
      * @return $this
      */
     public function addParams(Params $params): Method
@@ -99,46 +100,25 @@ class Method extends Base
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    /**
-     * @param ?string $content
-     *
-     * @return Method
-     */
     public function setContent(?string $content): Method
     {
         $this->content = $content;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getAbstract(): bool
     {
         return $this->abstract;
     }
 
-    /**
-     * @param bool $abstract
-     *
-     * @return Method
-     */
     public function setAbstract(bool $abstract = true): Method
     {
         $this->abstract = $abstract;
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return PrinterFactory::getInstance()->getPrinter($this->getVersion())->printMethod($this);
     }
 }

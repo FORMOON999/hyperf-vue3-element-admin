@@ -15,6 +15,7 @@ namespace App\Common\Helpers;
 class PasswordHelper
 {
     /**
+     * @param mixed $originPassword
      * @return null|false|string
      */
     public static function generatePassword($originPassword)
@@ -25,6 +26,8 @@ class PasswordHelper
     }
 
     /**
+     * @param mixed $originPassword
+     * @param mixed $hashedPassword
      * @return bool
      */
     public static function verifyPassword($originPassword, $hashedPassword)

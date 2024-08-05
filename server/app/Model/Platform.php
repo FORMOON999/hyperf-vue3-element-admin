@@ -30,30 +30,22 @@ use App\Common\Core\Entity\BaseModelEntity;
 class Platform extends BaseModel
 {
     /**
-     * primaryKey
-     *
-     * @var string
+     * primaryKey.
      */
     protected string $primaryKey = 'id';
 
     /**
      * The table associated with the model.
-     *
-     * @var string
      */
     protected ?string $table = 'platform';
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected array $fillable = ['id', 'created_at', 'updated_at', 'deleted_at', 'username', 'password', 'avatar', 'role_id', 'status', 'last_time'];
 
     /**
      * The attributes that should be cast to native types.
-     *
-     * @var array
      */
     protected array $casts = ['id' => 'integer', 'status' => 'integer', 'role_id' => 'json'];
 

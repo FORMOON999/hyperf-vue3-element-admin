@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
 namespace App\Common\Util\Auth;
 
@@ -19,8 +27,6 @@ class JwtHelper
 {
     /**
      * 提供了从请求解析 JWT 及对 JWT 进行一系列相关操作的能力。
-     *
-     * @var Jwt
      */
     protected Jwt $jwt;
 
@@ -39,17 +45,9 @@ class JwtHelper
         return $this->jwt->fromSubject($subject);
     }
 
-    protected function handleToken($token): Token
-    {
-        if (!$token instanceof Token) {
-            $token = new Token($token);
-        }
-        return $token;
-    }
-
     public function logout(string $token, bool $forceForever = false): bool
     {
-        return !$this->jwt->setToken($this->handleToken($token))->invalidate($forceForever)->check();
+        return ! $this->jwt->setToken($this->handleToken($token))->invalidate($forceForever)->check();
     }
 
     public function refreshToken(string $token, bool $forceForever = false): string
@@ -65,20 +63,6 @@ class JwtHelper
     public function getManager(): Manager
     {
         return $this->jwt->getManager();
-    }
-
-    protected function handleClaims(string $token, bool $ignoreExpired = false): array
-    {
-        $data = $this->jwt->setToken($this->handleToken($token))->getPayload($ignoreExpired)->toArray();
-        $defaultClaims = $this->jwt->getManager()->getPayloadFactory()->getDefaultClaims();
-        foreach ($defaultClaims as $claim) {
-            if ($claim === 'iss') {
-                continue;
-            }
-            unset($data[$claim]);
-        }
-        $this->jwt->setCustomClaims($data);
-        return $data;
     }
 
     public function verifyToken(?string $token, bool $ignoreExpired = false): JwtSubject
@@ -115,5 +99,27 @@ class JwtHelper
             ]);
         }
         return $this->storage;
+    }
+
+    protected function handleToken($token): Token
+    {
+        if (! $token instanceof Token) {
+            $token = new Token($token);
+        }
+        return $token;
+    }
+
+    protected function handleClaims(string $token, bool $ignoreExpired = false): array
+    {
+        $data = $this->jwt->setToken($this->handleToken($token))->getPayload($ignoreExpired)->toArray();
+        $defaultClaims = $this->jwt->getManager()->getPayloadFactory()->getDefaultClaims();
+        foreach ($defaultClaims as $claim) {
+            if ($claim === 'iss') {
+                continue;
+            }
+            unset($data[$claim]);
+        }
+        $this->jwt->setCustomClaims($data);
+        return $data;
     }
 }

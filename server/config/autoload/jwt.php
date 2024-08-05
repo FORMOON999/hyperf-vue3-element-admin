@@ -9,6 +9,16 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+use HyperfExt\Jwt\Storage\HyperfCache;
+
+/*
+ * This file is part of Hyperf.
+ *
+ * @see     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 return [
     /*
     |--------------------------------------------------------------------------
@@ -243,5 +253,5 @@ return [
     |
     */
 
-    'blacklist_storage' => HyperfExt\Jwt\Storage\HyperfCache::class,
+    'blacklist_storage' => HyperfCache::class,
 ];

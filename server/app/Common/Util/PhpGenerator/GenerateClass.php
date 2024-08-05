@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace App\Common\Util\PhpGenerator;
 
 use App\Common\Core\BaseObject;
@@ -82,209 +92,126 @@ class GenerateClass extends BaseObject
      */
     private $traits = [];
 
-    /**
-     * @return int
-     */
+    public function __toString(): string
+    {
+        return PrinterFactory::getInstance()->getPrinter($this->getVersion())->printClass($this);
+    }
+
     public function getVersion(): int
     {
         return $this->version;
     }
 
-    /**
-     * @param int $version
-     *
-     * @return GenerateClass
-     */
     public function setVersion(int $version): GenerateClass
     {
         $this->version = $version;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getStrictTypes(): bool
     {
         return $this->strictTypes;
     }
 
-    /**
-     * @param bool $strictTypes
-     *
-     * @return GenerateClass
-     */
     public function setStrictTypes(bool $strictTypes = true): GenerateClass
     {
         $this->strictTypes = $strictTypes;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getFinal(): bool
     {
         return $this->final;
     }
 
-    /**
-     * @param bool $final
-     *
-     * @return GenerateClass
-     */
     public function setFinal(bool $final): GenerateClass
     {
         $this->final = $final;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getAbstract(): bool
     {
         return $this->abstract;
     }
 
-    /**
-     * @param bool $abstract
-     *
-     * @return GenerateClass
-     */
     public function setAbstract(bool $abstract): GenerateClass
     {
         $this->abstract = $abstract;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getInterface(): bool
     {
         return $this->interface;
     }
 
-    /**
-     * @param bool $interface
-     *
-     * @return GenerateClass
-     */
     public function setInterface(bool $interface): GenerateClass
     {
         $this->interface = $interface;
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getNamespace(): ?string
     {
         return $this->namespace;
     }
 
-    /**
-     * @param string|null $namespace
-     *
-     * @return GenerateClass
-     */
     public function setNamespace(?string $namespace): GenerateClass
     {
         $this->namespace = $namespace;
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getUses(): array
     {
         return $this->uses;
     }
 
-    /**
-     * @param array $uses
-     *
-     * @return GenerateClass
-     */
     public function setUses(array $uses): GenerateClass
     {
         $this->uses = $uses;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getClassname(): string
     {
         return $this->classname;
     }
 
-    /**
-     * @param string $classname
-     *
-     * @return GenerateClass
-     */
     public function setClassname(string $classname): GenerateClass
     {
         $this->classname = $classname;
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getInheritance(): ?string
     {
         return $this->inheritance;
     }
 
-    /**
-     * @param string|null $inheritance
-     *
-     * @return GenerateClass
-     */
     public function setInheritance(?string $inheritance): GenerateClass
     {
         $this->inheritance = $inheritance;
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getComments(): array
     {
         return $this->comments;
     }
 
-    /**
-     * @param array $comments
-     *
-     * @return GenerateClass
-     */
     public function setComments(array $comments): GenerateClass
     {
         $this->comments = $comments;
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getImplements(): array
     {
         return $this->implements;
     }
 
-    /**
-     * @param array $implements
-     *
-     * @return GenerateClass
-     */
     public function setImplements(array $implements): GenerateClass
     {
         $this->implements = $implements;
@@ -301,8 +228,6 @@ class GenerateClass extends BaseObject
 
     /**
      * @param Constant[] $constants
-     *
-     * @return GenerateClass
      */
     public function setConstants(array $constants): GenerateClass
     {
@@ -320,8 +245,6 @@ class GenerateClass extends BaseObject
 
     /**
      * @param Method[] $methods
-     *
-     * @return GenerateClass
      */
     public function setMethods(array $methods): GenerateClass
     {
@@ -339,8 +262,6 @@ class GenerateClass extends BaseObject
 
     /**
      * @param Property[] $properties
-     *
-     * @return GenerateClass
      */
     public function setProperties(array $properties): GenerateClass
     {
@@ -348,86 +269,49 @@ class GenerateClass extends BaseObject
         return $this;
     }
 
-    /**
-     * @param string $use
-     *
-     * @return GenerateClass
-     */
     public function addUse(string $use): GenerateClass
     {
-        if (!in_array($use, $this->uses)) {
+        if (! in_array($use, $this->uses)) {
             $this->uses[] = $use;
         }
         return $this;
     }
 
-    /**
-     * @param string $comment
-     *
-     * @return GenerateClass
-     */
     public function addComment(string $comment): GenerateClass
     {
         $this->comments[] = $comment;
         return $this;
     }
 
-    /**
-     * @param string $implement
-     *
-     * @return GenerateClass
-     */
     public function addImplement(string $implement): GenerateClass
     {
         $this->implements[] = $implement;
         return $this;
     }
 
-    /**
-     * @param Constant $constant
-     *
-     * @return GenerateClass
-     */
     public function addCont(Constant $constant): GenerateClass
     {
         $this->constants[] = $constant;
         return $this;
     }
 
-    /**
-     * @param Property $property
-     *
-     * @return GenerateClass
-     */
     public function addProperty(Property $property): GenerateClass
     {
         $this->properties[] = $property;
         return $this;
     }
 
-    /**
-     * @param Method $method
-     *
-     * @return GenerateClass
-     */
     public function addMethod(Method $method): GenerateClass
     {
         $this->methods[] = $method;
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getTraits(): array
     {
         return $this->traits;
     }
 
-    /**
-     * @param array $traits
-     * @return GenerateClass
-     */
     public function setTraits(array $traits): GenerateClass
     {
         $this->traits = $traits;
@@ -435,7 +319,6 @@ class GenerateClass extends BaseObject
     }
 
     /**
-     * @param string $trait
      * @return $this
      */
     public function addTrait(string $trait): GenerateClass
@@ -443,10 +326,4 @@ class GenerateClass extends BaseObject
         $this->traits[] = $trait;
         return $this;
     }
-
-    public function __toString(): string
-    {
-        return PrinterFactory::getInstance()->getPrinter($this->getVersion())->printClass($this);
-    }
-
 }

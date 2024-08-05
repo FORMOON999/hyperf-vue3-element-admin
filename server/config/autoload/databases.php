@@ -9,8 +9,9 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-
+use App\Common\Core\BaseModel;
 use Hyperf\Database\Commands\ModelOption;
+use Hyperf\ModelCache\Handler\RedisHandler;
 
 return [
     'default' => [
@@ -42,20 +43,20 @@ return [
                 'path' => 'app/Model',
                 'force_casts' => true,
                 'inheritance' => 'BaseModel',
-                'uses' => \App\Common\Core\BaseModel::class,
+                'uses' => BaseModel::class,
                 'refresh_fillable' => true,
                 'with_comments' => true,
                 'property_case' => ModelOption::PROPERTY_SNAKE_CASE,
             ],
         ],
         'cache' => [
-            'handler' => \Hyperf\ModelCache\Handler\RedisHandler::class,
+            'handler' => RedisHandler::class,
             'cache_key' => 'mc:%s:m:%s:%s:%s',
             'prefix' => 'default',
             'ttl' => 3600 * 2,
             'empty_model_ttl' => 60,
             'load_script' => true,
             'use_default_value' => false,
-        ]
+        ],
     ],
 ];

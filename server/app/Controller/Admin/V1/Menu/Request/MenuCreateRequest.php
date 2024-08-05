@@ -31,16 +31,6 @@ class MenuCreateRequest extends BaseObject
     #[ApiModelProperty(value: '菜单类型(CATALOG-菜单；MENU-目录；BUTTON-按钮；EXTLINK-外链)', required: true), Required]
     public MenuType $type;
 
-    public function setType($type): MenuType
-    {
-        $this->type = MenuType::from($type);
-        if ($this->type == MenuType::CATALOG) {
-            $this->component = 'Layout';
-        }
-        return $this->type;
-    }
-
-
     #[ApiModelProperty(value: '路由路径')]
     public string $path = '';
 
@@ -70,4 +60,13 @@ class MenuCreateRequest extends BaseObject
 
     #[ApiModelProperty(value: '路由参数')]
     public ?array $params = [];
+
+    public function setType($type): MenuType
+    {
+        $this->type = MenuType::from($type);
+        if ($this->type == MenuType::CATALOG) {
+            $this->component = 'Layout';
+        }
+        return $this->type;
+    }
 }

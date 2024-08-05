@@ -33,8 +33,7 @@ class SwaggerComponents
     public function __construct(
         protected SwaggerCommon $common,
         protected PropertyManager $propertyManager,
-    ) {
-    }
+    ) {}
 
     public function getSchemas(): array
     {

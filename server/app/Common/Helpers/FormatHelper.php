@@ -32,6 +32,8 @@ class FormatHelper
 
     /**
      * 金额格式化.
+     * @param mixed $number
+     * @param mixed $decimals
      */
     public static function formatNumbers($number, $decimals): string
     {

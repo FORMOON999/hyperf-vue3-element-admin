@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace App\Common\Commands\CodeGenerator\Generator\Web;
 
 use App\Common\Commands\Model\ClassInfo;
@@ -7,17 +17,34 @@ use App\Common\Helpers\FormatHelper;
 
 class ApiWeb extends BaseWeb
 {
+    public function buildClass(ClassInfo $class, array $results = []): string
+    {
+        $stub = file_get_contents(dirname(dirname(__DIR__)) . '/stubs/Web/WebApi.stub');
+
+        $name = ucfirst($this->modelInfo->name);
+        $pageVO = $this->ts("{$name}PageVO");
+        $form = $this->ts("{$name}Form");
+
+        $this->replace($stub, '%NAME%', $name)
+            ->replace($stub, '%COMMENT%', $this->modelInfo->comment)
+            ->replace($stub, '%URI_NAME%', strtoupper($this->modelInfo->name) . '_BASE_URL')
+            ->replace($stub, '%URI%', $this->getUri())
+            ->replace($stub, '%PAGE_VO%', $pageVO)
+            ->replace($stub, '%FORM%', $form);
+        return $stub;
+    }
+
     protected function getClassInfo(string $application = ''): ClassInfo
     {
         $path = implode('/', [
             $this->webConfig['path'],
             'src',
             'api',
-            $this->getFilename() . '.ts'
+            $this->getFilename() . '.ts',
         ]);
         return new ClassInfo([
             'name' => $this->getFilename(),
-            'namespace' => "",
+            'namespace' => '',
             'file' => $path,
         ]);
     }
@@ -59,7 +86,7 @@ class ApiWeb extends BaseWeb
         if ($excepts) {
             $excepts[] = 'created_at';
         }
-        $tsInterface = "export interface $interfaceName {\n";
+        $tsInterface = "export interface {$interfaceName} {\n";
         foreach ($this->modelInfo->columns as $item) {
             if (in_array($item['column_name'], $excepts)) {
                 continue;
@@ -70,26 +97,9 @@ class ApiWeb extends BaseWeb
             $tsInterface .= "  /**\n";
             $tsInterface .= "   * {$comment}\n";
             $tsInterface .= "   */\n";
-            $tsInterface .= "  $key?: $type;\n";
+            $tsInterface .= "  {$key}?: {$type};\n";
         }
         $tsInterface .= "}\n";
         return $tsInterface;
-    }
-
-    public function buildClass(ClassInfo $class, array $results = []): string
-    {
-        $stub = file_get_contents(dirname(dirname(__DIR__)) . '/stubs/Web/WebApi.stub');
-
-        $name = ucfirst($this->modelInfo->name);
-        $pageVO = $this->ts("{$name}PageVO");
-        $form = $this->ts("{$name}Form");
-
-        $this->replace($stub, '%NAME%', $name)
-            ->replace($stub, '%COMMENT%', $this->modelInfo->comment)
-            ->replace($stub, '%URI_NAME%', strtoupper($this->modelInfo->name) . '_BASE_URL')
-            ->replace($stub, '%URI%', $this->getUri())
-            ->replace($stub, '%PAGE_VO%', $pageVO)
-            ->replace($stub, '%FORM%', $form);
-        return $stub;
     }
 }

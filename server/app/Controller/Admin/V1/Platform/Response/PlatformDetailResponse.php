@@ -1,14 +1,17 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
 namespace App\Controller\Admin\V1\Platform\Response;
 
-use App\Common\Core\Annotation\ArrayType;
 use App\Model\PlatformEntity;
-use Hyperf\ApiDocs\Annotation\ApiModelProperty;
 
-class PlatformDetailResponse extends PlatformEntity
-{
-
-}
+class PlatformDetailResponse extends PlatformEntity {}

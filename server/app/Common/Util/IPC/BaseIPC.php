@@ -24,6 +24,8 @@ abstract class BaseIPC
 
     protected ?Server $server = null;
 
+    abstract public function update(PipeMessageInterface $config): void;
+
     protected function shareConfigToProcesses(PipeMessageInterface $message): void
     {
         if (class_exists(ProcessCollector::class) && ! ProcessCollector::isEmpty()) {
@@ -33,8 +35,6 @@ abstract class BaseIPC
             $this->update($message);
         }
     }
-
-    abstract public function update(PipeMessageInterface $config): void;
 
     protected function shareMessageToWorkers(PipeMessageInterface $message): void
     {

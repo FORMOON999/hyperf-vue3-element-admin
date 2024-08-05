@@ -1,5 +1,15 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace App\Common\Util\PhpGenerator;
 
 use App\Common\Util\PhpGenerator\Printer\PrinterFactory;
@@ -16,6 +26,11 @@ class Property extends Base
      */
     private $annotation;
 
+    public function __toString(): string
+    {
+        return PrinterFactory::getInstance()->getPrinter($this->getVersion())->printProperty($this);
+    }
+
     /**
      * @return mixed
      */
@@ -24,35 +39,19 @@ class Property extends Base
         return $this->default;
     }
 
-    /**
-     * @param $default
-     *
-     * @return Property
-     */
     public function setDefault($default): Property
     {
         $this->default = $default;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isAnnotation(): bool
     {
         return $this->annotation;
     }
 
-    /**
-     * @param bool $annotation
-     */
     public function setAnnotation(bool $annotation): void
     {
         $this->annotation = $annotation;
-    }
-
-    public function __toString(): string
-    {
-        return PrinterFactory::getInstance()->getPrinter($this->getVersion())->printProperty($this);
     }
 }

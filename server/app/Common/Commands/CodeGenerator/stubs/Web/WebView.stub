@@ -91,7 +91,7 @@
         ref="%NAME%FormRef"
         :model="formData"
         :rules="rules"
-        label-width="100px"
+        label-width="180px"
       >
 %FORM%
 

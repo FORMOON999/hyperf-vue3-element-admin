@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
 namespace App\Common\Commands\CodeGenerator\Generator;
 
@@ -26,10 +34,11 @@ class ConstantControllerGenerator extends ApplicationGenerator
         $stub = file_get_contents(dirname(__DIR__) . '/stubs/ConstantController.stub');
         $application = $results['_application'];
         $url = array_merge(
-            explode('/', $this->config->url), [
-            lcfirst($this->config->version),
-            $application
-        ],
+            explode('/', $this->config->url),
+            [
+                lcfirst($this->config->version),
+                $application,
+            ],
             explode('/', Str::snake($this->modelInfo->name, '/'))
         );
         $uri = implode('/', array_filter($url)) . '/constant';
@@ -37,7 +46,7 @@ class ConstantControllerGenerator extends ApplicationGenerator
         $path = implode('/', array_filter([
             $this->config->path,
             $this->modelInfo->module,
-            "Constants"
+            'Constants',
         ]));
 
         $this->replaceNamespace($stub, $class->namespace)

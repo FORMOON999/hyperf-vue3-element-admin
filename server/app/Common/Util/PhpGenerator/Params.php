@@ -1,7 +1,16 @@
 <?php
 
-namespace App\Common\Util\PhpGenerator;
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
+namespace App\Common\Util\PhpGenerator;
 
 use App\Common\Core\BaseObject;
 
@@ -43,8 +52,6 @@ class Params extends BaseObject
 
     /**
      * @param mixed $default
-     *
-     * @return Params
      */
     public function setDefault($default): Params
     {
@@ -53,19 +60,11 @@ class Params extends BaseObject
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Params
-     */
     public function setName(string $name): Params
     {
         $this->name = $name;
@@ -82,8 +81,6 @@ class Params extends BaseObject
 
     /**
      * @param mixed $type
-     *
-     * @return Params
      */
     public function setType($type): Params
     {
@@ -91,38 +88,22 @@ class Params extends BaseObject
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getComment(): string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string $comment
-     *
-     * @return Params
-     */
     public function setComment(string $comment): Params
     {
         $this->comment = $comment;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function getAssign(): bool
     {
         return $this->assign;
     }
 
-    /**
-     * @param bool $assign
-     *
-     * @return Params
-     */
     protected function setAssign(bool $assign): Params
     {
         $this->assign = $assign;

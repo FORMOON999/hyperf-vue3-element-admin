@@ -9,5 +9,9 @@ use App\Common\Core\Entity\Page;
 
 class %CLASS% extends Page
 {
+    #[ApiModelProperty('开始时间')]
+    public string $startTime;
 
+    #[ApiModelProperty('结束时间')]
+    public string $endTime;
 }

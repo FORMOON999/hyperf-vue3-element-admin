@@ -15,7 +15,7 @@ use Hyperf\Command\Listener\FailToHandleListener;
 use Hyperf\ExceptionHandler\Listener\ErrorExceptionHandler;
 use Hyperf\ModelCache\Listener\EagerLoadListener;
 
-/**
+/*
  * This file is part of Hyperf.
  *
  * @see     https://www.hyperf.io

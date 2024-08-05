@@ -20,7 +20,6 @@ namespace App\Common\Helpers;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Guzzle\ClientFactory;
 use Psr\Http\Message\ServerRequestInterface;
-use Throwable;
 
 /**
  * ip info.

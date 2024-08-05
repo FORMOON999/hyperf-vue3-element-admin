@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Common\Util\Upload\Type;
 
 use App\Common\Util\Upload\AbstractUpload;

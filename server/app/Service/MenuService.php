@@ -136,6 +136,7 @@ class MenuService implements MenuInterface
             $query->whereLike('name', $search);
         }
         $query->whereSearch($search)
+            ->orderBy('sort')
             ->select([
                 'id',
                 'parent_id',

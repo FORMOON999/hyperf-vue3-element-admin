@@ -17,7 +17,6 @@ use App\Common\Core\Entity\Output;
 use DateInterval;
 use Hyperf\Database\Model\Collection;
 use Hyperf\Database\Model\Model;
-use Hyperf\ModelCache\CacheableInterface;
 use Hyperf\ModelCache\Config;
 use Hyperf\ModelCache\Handler\DefaultValueInterface;
 use Hyperf\ModelCache\Handler\HandlerInterface;

@@ -19,6 +19,7 @@ class PlatformListRequest extends Page
 {
     #[ApiModelProperty('状态')]
     public int $status;
+
     #[ApiModelProperty('开始时间')]
     public string $startTime;
 

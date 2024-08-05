@@ -2,20 +2,30 @@
 /**
  * Created by PhpStorm.
  * Date:  2021/10/22
- * Time:  4:03 下午
+ * Time:  4:03 下午.
  */
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
 namespace App\Common\Util\Auth;
 
 use App\Common\Util\Auth\Mode\JwtMode;
 use App\Common\Util\Auth\Mode\TokenMode;
+
 use function Hyperf\Support\make;
 
 class LoginFactory
 {
     public const LOGIN_MODE_API = 'api';
+
     public const LOGIN_MODE_SESSION = 'session';
 
     public const MAP = [

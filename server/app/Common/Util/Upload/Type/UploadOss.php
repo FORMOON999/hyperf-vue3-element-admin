@@ -9,6 +9,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace App\Common\Util\Upload\Type;
 
 use AlibabaCloud\Client\AlibabaCloud;
@@ -16,6 +17,7 @@ use App\Common\Helpers\DateHelper;
 use App\Common\Util\Upload\AbstractUpload;
 use EasySwoole\Oss\AliYun\Config;
 use EasySwoole\Oss\AliYun\OssClient;
+use Exception;
 
 class UploadOss extends AbstractUpload
 {
@@ -131,7 +133,7 @@ class UploadOss extends AbstractUpload
                 'file' => $path,
                 'result' => true,
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $data = [
                 'result' => false,
                 'message' => $e->getMessage(),

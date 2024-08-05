@@ -14,8 +14,5 @@ namespace App\Common\Entity;
 
 class Options
 {
-    public function __construct(public string $label, public $value)
-    {
-
-    }
+    public function __construct(public string $label, public $value) {}
 }

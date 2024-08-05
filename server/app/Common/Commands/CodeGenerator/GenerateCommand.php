@@ -115,7 +115,7 @@ class GenerateCommand extends HyperfCommand
         $modules = \Hyperf\Config\config('generate.modules', []);
         if (empty($modules)) {
             foreach ($models as $model) {
-                if (!in_array($model->module, $modules)) {
+                if (! in_array($model->module, $modules)) {
                     $modules[] = $model->module;
                 }
             }
@@ -167,7 +167,7 @@ class GenerateCommand extends HyperfCommand
                 ->addEdge($getListResponse, $controller)
                 ->addEdge($detailResponse, $controller)
                 ->addEdge($service, $controller);
-//                ->addEdge($logic, $controller)
+            //                ->addEdge($logic, $controller)
             if ($webConfig['enable']) {
                 $webApi = Vertex::of(new ApiWeb(array_merge($condition, ['webConfig' => $webConfig])), 'webApi');
                 $webView = Vertex::of(new ViewWeb(array_merge($condition, ['webConfig' => $webConfig])), 'webView');

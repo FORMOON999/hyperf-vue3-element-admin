@@ -1,18 +1,42 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace App\Common\Commands\CodeGenerator\Generator\Web;
 
-use App\Common\Commands\CodeGenerator\Generator\AbstractGenerator;
 use App\Common\Commands\Model\ClassInfo;
 use App\Common\Constants\BaseStatus;
 use App\Common\Helpers\FormatHelper;
 use App\Constants\Type\MenuType;
 use Hyperf\DbConnection\Db;
-use Hyperf\Stringable\Str;
 
 class ViewWeb extends BaseWeb
 {
     protected array $webConfig;
+
+    public function buildClass(ClassInfo $class, array $results = []): string
+    {
+        $stub = file_get_contents(dirname(dirname(__DIR__)) . '/stubs/Web/WebView.stub');
+        $name = FormatHelper::camelize($this->modelInfo->name);
+
+        $this->addMenu($this->modelInfo->comment, $name);
+
+        $this->replace($stub, '%NAME%', $name)
+            ->replace($stub, '%DEFINE%', ucfirst($name))
+            ->replace($stub, '%COMMENT%', $this->modelInfo->comment)
+            ->replace($stub, '%RULE%', $this->rule())
+            ->replace($stub, '%ROW%', $this->row())
+            ->replace($stub, '%FORM%', $this->form());
+        return $stub;
+    }
 
     protected function getClassInfo(string $application = ''): ClassInfo
     {
@@ -21,11 +45,11 @@ class ViewWeb extends BaseWeb
             'src',
             'views',
             $this->getFilename(),
-            'index.vue'
+            'index.vue',
         ]);
         return new ClassInfo([
             'name' => $this->getFilename(),
-            'namespace' => "",
+            'namespace' => '',
             'file' => $path,
         ]);
     }
@@ -56,7 +80,7 @@ class ViewWeb extends BaseWeb
                     $html .= $this->rowStatus($label);
                     break;
                 default:
-                    $html .= '        <el-table-column key="' . $key . '" label="' . $label . '" align="center" prop="' . $key . '" width="100" />' . "\n";
+                    $html .= '        <el-table-column key="' . $key . '" label="' . $label . '" align="center" prop="' . $key . '" width="180" />' . "\n";
                     break;
             }
         }
@@ -74,6 +98,7 @@ class ViewWeb extends BaseWeb
         $html .= '        </el-form-item>' . "\n";
         return $html;
     }
+
     protected function form(): string
     {
         $html = '';
@@ -116,12 +141,12 @@ class ViewWeb extends BaseWeb
     protected function addMenu(string $comment, string $path)
     {
         $date = date('Y-m-d H:i:s');
-        $category = Db::table("menu")
+        $category = Db::table('menu')
             ->where('parent_id', '=', 0)
             ->where('name', '=', '未分配')
             ->first(['id']);
         if (is_null($category)) {
-            $categoryId = Db::table("menu")->insertGetId([
+            $categoryId = Db::table('menu')->insertGetId([
                 'parent_id' => 0,
                 'name' => '未分配',
                 'type' => MenuType::CATALOG,
@@ -133,18 +158,18 @@ class ViewWeb extends BaseWeb
                 'icon' => 'system',
                 'redirect' => '/unallocated',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ]);
         } else {
             $categoryId = $category->id;
         }
 
-        $menu = Db::table("menu")
+        $menu = Db::table('menu')
             ->where('parent_id', '=', $categoryId)
             ->where('name', '=', "{$comment}管理")
             ->first(['id']);
         if (is_null($menu)) {
-            $menuId = Db::table("menu")->insertGetId([
+            $menuId = Db::table('menu')->insertGetId([
                 'parent_id' => $categoryId,
                 'name' => "{$comment}管理",
                 'type' => MenuType::MENU,
@@ -156,7 +181,7 @@ class ViewWeb extends BaseWeb
                 'icon' => 'el-icon-User',
                 'redirect' => '',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ]);
             Db::table('menu')->insert([
                 ['parent_id' => $menuId, 'name' => "{$comment}新增", 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => $path . ':add', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
@@ -164,22 +189,5 @@ class ViewWeb extends BaseWeb
                 ['parent_id' => $menuId, 'name' => "{$comment}删除", 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => $path . ':delete', 'sort' => 3, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
             ]);
         }
-    }
-
-
-    public function buildClass(ClassInfo $class, array $results = []): string
-    {
-        $stub = file_get_contents(dirname(dirname(__DIR__)) . '/stubs/Web/WebView.stub');
-        $name = FormatHelper::camelize($this->modelInfo->name);
-
-        $this->addMenu($this->modelInfo->comment, $name);
-
-        $this->replace($stub, '%NAME%', $name)
-            ->replace($stub, '%DEFINE%', ucfirst($name))
-            ->replace($stub, '%COMMENT%', $this->modelInfo->comment)
-            ->replace($stub, '%RULE%', $this->rule())
-            ->replace($stub, '%ROW%', $this->row())
-            ->replace($stub, '%FORM%', $this->form());
-        return $stub;
     }
 }

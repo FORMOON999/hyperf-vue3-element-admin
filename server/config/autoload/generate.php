@@ -25,13 +25,13 @@ return [
     'web' => [
         'enable' => true,
         'path' => dirname(BASE_PATH) . '/web',
-        'application' => 'admin'
+        'application' => 'admin',
     ],
     'ignore_code' => [
         'menu',
         'migrations',
         'platform',
         'role',
-        'role_menu'
+        'role_menu',
     ],
 ];

@@ -14,8 +14,8 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
-namespace App\Common\Util\Upload;
 
+namespace App\Common\Util\Upload;
 
 use App\Common\Helpers\RegularHelper;
 

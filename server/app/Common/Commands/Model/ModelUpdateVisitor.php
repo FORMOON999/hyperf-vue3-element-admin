@@ -2,10 +2,18 @@
 /**
  * Created by PhpStorm.
  * Date:  2021/9/2
- * Time:  2:36 下午
+ * Time:  2:36 下午.
  */
 
 declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://hyperf.wiki
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
 
 namespace App\Common\Commands\Model;
 
@@ -16,7 +24,6 @@ use PhpParser\Node\Stmt\PropertyProperty;
 
 class ModelUpdateVisitor extends \Hyperf\Database\Commands\Ast\ModelUpdateVisitor
 {
-
     protected function formatDatabaseType(string $type): ?string
     {
         switch ($type) {
@@ -39,11 +46,11 @@ class ModelUpdateVisitor extends \Hyperf\Database\Commands\Ast\ModelUpdateVisito
         }
     }
 
-    protected function rewriteCasts(Node\Stmt\PropertyProperty $node): Node\Stmt\PropertyProperty
+    protected function rewriteCasts(PropertyProperty $node): PropertyProperty
     {
         $items = [];
         $keys = [];
-        if ($node->default instanceof Node\Expr\Array_) {
+        if ($node->default instanceof Array_) {
             $items = $node->default->items;
         }
 
@@ -72,14 +79,14 @@ class ModelUpdateVisitor extends \Hyperf\Database\Commands\Ast\ModelUpdateVisito
             }
             if ($type || $type = $this->formatDatabaseType($column['data_type'])) {
                 $items[] = new Node\Expr\ArrayItem(
-                    new Node\Scalar\String_($type),
-                    new Node\Scalar\String_($name)
+                    new String_($type),
+                    new String_($name)
                 );
             }
         }
 
-        $node->default = new Node\Expr\Array_($items, [
-            'kind' => Node\Expr\Array_::KIND_SHORT,
+        $node->default = new Array_($items, [
+            'kind' => Array_::KIND_SHORT,
         ]);
         return $node;
     }

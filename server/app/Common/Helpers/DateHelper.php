@@ -31,6 +31,7 @@ class DateHelper
     }
 
     /**
+     * @param mixed $time
      * @return string
      * @throws Exception
      */

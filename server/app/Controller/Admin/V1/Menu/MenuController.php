@@ -67,7 +67,7 @@ class MenuController extends BaseController
 
     #[GetMapping(path: '')]
     #[ApiOperation('获取菜单管理列表')]
-    #[ApiResponse(new CommonResponse(['data' => [new MenuDetailResponse]]))]
+    #[ApiResponse(new CommonResponse(['data' => [new MenuDetailResponse()]]))]
     public function getList(#[Valid] #[RequestQuery] MenuListRequest $request)
     {
         $result = $this->menu->getList(

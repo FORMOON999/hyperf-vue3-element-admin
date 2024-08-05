@@ -21,8 +21,10 @@ use App\Common\Core\Enum\EnumMessageTrait;
 enum Terminal: int
 {
     use EnumMessageTrait;
+
     #[EnumMessage(message: '安卓')]
     case ANDROID = 1;
+
     #[EnumMessage(message: '苹果')]
     case IOS = 2;
 

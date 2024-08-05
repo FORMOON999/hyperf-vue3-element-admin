@@ -38,27 +38,22 @@ use Hyperf\Database\Model\Relations\BelongsToMany;
 class Menu extends BaseModel
 {
     /**
-     * primaryKey
-     *
-     * @var string
+     * primaryKey.
      */
     protected string $primaryKey = 'id';
+
     /**
      * The table associated with the model.
-     *
-     * @var string
      */
     protected ?string $table = 'menu';
+
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array
      */
     protected array $fillable = ['id', 'created_at', 'updated_at', 'deleted_at', 'parent_id', 'name', 'type', 'path', 'component', 'perm', 'sort', 'visible', 'icon', 'redirect', 'always_show', 'keep_alive', 'params'];
+
     /**
      * The attributes that should be cast to native types.
-     *
-     * @var array
      */
     protected array $casts = ['id' => 'integer', 'parent_id' => 'integer', 'sort' => 'integer', 'visible' => 'integer', 'always_show' => 'integer', 'keep_alive' => 'integer', 'params' => 'json'];
 

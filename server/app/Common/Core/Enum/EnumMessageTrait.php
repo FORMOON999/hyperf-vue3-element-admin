@@ -56,7 +56,7 @@ trait EnumMessageTrait
 
     protected function parse(string $doc, array $previous = []): array
     {
-        $pattern = '/\\@(\\w+)\\(\\"(.+)\\"\\)/U';
+        $pattern = '/\@(\w+)\(\"(.+)\"\)/U';
         if (preg_match_all($pattern, $doc, $result)) {
             if (isset($result[1], $result[2])) {
                 $keys = $result[1];
