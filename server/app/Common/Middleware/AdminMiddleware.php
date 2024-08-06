@@ -12,9 +12,12 @@ declare(strict_types=1);
 
 namespace App\Common\Middleware;
 
+use App\Common\Constants\BaseStatus;
+use App\Common\Exceptions\BusinessException;
 use App\Common\Util\Auth\Exception\InvalidTokenException;
 use App\Common\Util\Auth\JwtSubject;
 use App\Common\Util\Auth\Middleware\BaseAuthMiddleware;
+use App\Constants\Errors\PlatformError;
 use App\Infrastructure\PlatformInterface;
 use Hyperf\Di\Annotation\Inject;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,10 +36,15 @@ class AdminMiddleware extends BaseAuthMiddleware
     {
         $platform = $this->platform->detail([
             'id' => $payload->data['sub'] ?? -1,
-        ], ['id', 'role_id']);
+        ], ['id', 'role_id', 'status']);
 
         if (empty($platform)) {
             throw new InvalidTokenException();
+        }
+
+        // 状态
+        if ($platform->status !== BaseStatus::NORMAL) {
+            throw new BusinessException(PlatformError::FROZEN);
         }
 
         return $platform->toArray();

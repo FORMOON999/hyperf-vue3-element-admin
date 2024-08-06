@@ -15,6 +15,8 @@ namespace App\Common\Util\IPC;
 use App\Common\Util\IPC\Config\ConfigIPC;
 use App\Common\Util\IPC\Config\PipeConfig;
 use App\Common\Util\IPC\Config\PipeConfigInterface;
+use App\Common\Util\IPC\Helper\SysConfigHelper;
+use App\Infrastructure\ConfigInterface;
 use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\BootApplication;
@@ -23,9 +25,10 @@ use Hyperf\Process\Event\PipeMessage as UserProcessPipeMessage;
 use Psr\Container\ContainerInterface;
 
 // ipc config listener
+#[Listener]
 class IPCListener implements ListenerInterface
 {
-    public function __construct(protected ContainerInterface $container) {}
+    public function __construct(protected ContainerInterface $container, protected ConfigIPC $ipc, protected ConfigInterface $config) {}
 
     public function listen(): array
     {
@@ -38,13 +41,17 @@ class IPCListener implements ListenerInterface
 
     public function process(object $event): void
     {
-        $ipc = $this->container->get(ConfigIPC::class);
         if ($event instanceof BootApplication) {
-            $ipc->update(new PipeConfig(['tConfig' => 'test']));
+            $result = $this->config->getList([], ['key', 'value']);
+            $data = [];
+            foreach ($result->list as $item) {
+                $data[$item->key] = $item->value;
+            }
+            $this->ipc->update(new PipeConfig([SysConfigHelper::CONFIG_KEY => $data]));
         }
 
         if ($event instanceof OnPipeMessage || $event instanceof UserProcessPipeMessage) {
-            $event->data instanceof PipeConfigInterface && $ipc->update($event->data);
+            $event->data instanceof PipeConfigInterface && $this->ipc->update($event->data);
         }
     }
 }

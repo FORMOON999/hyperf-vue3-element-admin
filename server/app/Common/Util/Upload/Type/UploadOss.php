@@ -124,20 +124,19 @@ class UploadOss extends AbstractUpload
         ]);
     }
 
-    public function uploadFile(string $path, string $file)
+    public function uploadFile(string $path, string $file, bool $isEncrypt = false, bool $saveOld = false)
     {
+        $data = [
+            'path' => $path,
+            'result' => true,
+            'message' => '上传成功',
+        ];
         $ossClient = $this->getClient();
         try {
             $ossClient->uploadFile($this->config->public['bucket'], $path, $file);
-            $data = [
-                'file' => $path,
-                'result' => true,
-            ];
         } catch (Exception $e) {
-            $data = [
-                'result' => false,
-                'message' => $e->getMessage(),
-            ];
+            $data['result'] = false;
+            $data['message'] = $e->getMessage();
         }
         return $data;
     }

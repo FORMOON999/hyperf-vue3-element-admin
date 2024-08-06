@@ -16,7 +16,7 @@ interface UploadInterface
 {
     public function getToken(string $key);
 
-    public function uploadFile(string $path, string $file);
+    public function uploadFile(string $path, string $file, bool $isEncrypt = false, bool $saveOld = false);
 
     public function remove(string $path): bool;
 

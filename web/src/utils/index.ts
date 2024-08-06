@@ -39,3 +39,12 @@ export function isExternal(path: string) {
   const isExternal = /^(https?:|http?:|mailto:|tel:)/.test(path);
   return isExternal;
 }
+
+/**
+ * 字典文字展示方法
+ * @param dict
+ * @param code
+ */
+export const showDictLabel = (dict: OptionType[], code: string | number) => {
+  return code ? dict.find((item) => item.value == code)?.label : "";
+};

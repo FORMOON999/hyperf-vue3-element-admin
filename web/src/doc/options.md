@@ -5,7 +5,7 @@
   ...
   import xxxAPI from "@/api/xxx";
 
-  const xxxxOptions = ref<OptionType[]>();
+  const xxxxOptions = ref<OptionType[]>([]);
   async function options() {
     xxxxOptions.value = await xxxAPI.getOptions();
   }
@@ -15,6 +15,8 @@
 
 ## 列表使用
 ```vue
+
+  import { showDictLabel } from "@/utils/index";
   ....
   <el-table-column
     key="xxxx"
@@ -24,15 +26,7 @@
     width="180"
   >
     <template #default="scope">
-              <span>
-                {{
-                  scope.row.xxxx
-                    ? xxxxOptions.find(
-                        (item) => item.value == scope.row.position
-                      )?.label
-                    : ""
-                }}
-              </span>
+        {{ showDictLabel(xxxxOptions, scope.row.xxxx) }}
     </template>
   </el-table-column>
 

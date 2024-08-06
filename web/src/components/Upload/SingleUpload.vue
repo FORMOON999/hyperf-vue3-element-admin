@@ -1,21 +1,23 @@
 <template>
   <!-- 上传组件 -->
   <el-upload
-    v-model="imgUrl"
+    v-model="imgPath"
     class="single-uploader"
     :show-file-list="false"
     list-type="picture-card"
     :before-upload="handleBeforeUpload"
     :http-request="uploadFile"
   >
-    <img v-if="imgUrl" :src="imgUrl" class="single-uploader__image" />
-    <el-icon v-else class="single-uploader__icon"><i-ep-plus /></el-icon>
+    <img v-if="imgPath" :src="imgPath" class="single-uploader__image"/>
+    <el-icon v-else class="single-uploader__icon">
+      <i-ep-plus/>
+    </el-icon>
   </el-upload>
 </template>
 
 <script setup lang="ts">
-import { UploadRawFile, UploadRequestOptions } from "element-plus";
-// import FileAPI from "@/api/file";
+import {UploadRawFile, UploadRequestOptions, UploadUserFile} from "element-plus";
+import FileAPI from "@/api/file";
 
 const props = defineProps({
   modelValue: {
@@ -26,6 +28,23 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 const imgUrl = useVModel(props, "modelValue", emit);
+const imgPath = ref("");
+
+watch(
+  () => props.modelValue,
+  (newVal: string): void => {
+    if (newVal == "") {
+      imgPath.value = imgUrl.value;
+    } else {
+      try {
+        let urlObj = new URL(newVal);
+        imgPath.value = imgUrl.value;
+        imgUrl.value = urlObj.pathname;
+      } catch (err) {}
+    }
+  },
+  { immediate: true }
+);
 
 /**
  * 自定义图片上传
@@ -33,9 +52,9 @@ const imgUrl = useVModel(props, "modelValue", emit);
  * @param options
  */
 async function uploadFile(options: UploadRequestOptions): Promise<any> {
-  // const data = await FileAPI.upload(options.file);
-  const data = {name: "aa", url : "a"}
-  imgUrl.value = data.url;
+  const data = await FileAPI.upload(options.file);
+  imgPath.value = data.url;
+  imgUrl.value = data.path;
 }
 
 /**
@@ -48,6 +67,7 @@ function handleBeforeUpload(file: UploadRawFile) {
   }
   return true;
 }
+
 </script>
 
 <style scoped lang="scss">

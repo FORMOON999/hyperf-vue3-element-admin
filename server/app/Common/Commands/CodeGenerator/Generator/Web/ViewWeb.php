@@ -57,7 +57,7 @@ class ViewWeb extends BaseWeb
     protected function rowStatus(string $label): string
     {
         $key = 'status';
-        $html = '        <el-table-column label="' . $label . '" align="center" prop="' . $key . '">' . "\n";
+        $html = '        <el-table-column label="' . $label . '" align="center" prop="' . $key . '" width="100" >' . "\n";
         $html .= '          <template #default="scope">' . "\n";
         $html .= '            <el-tag :type="scope.row.status == 1 ? \'success\' : \'info\'">{{scope.row.status == 1 ? "启用" : "禁用"}}</el-tag>' . "\n";
         $html .= '          </template>' . "\n";

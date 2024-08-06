@@ -18,19 +18,16 @@ use App\Common\Core\Enum\EnumMessageTrait;
 /**
  * 终端.
  */
-enum Terminal: int
+enum Terminal: string
 {
     use EnumMessageTrait;
 
     #[EnumMessage(message: '安卓')]
-    case ANDROID = 1;
+    case ANDROID = 'android';
 
     #[EnumMessage(message: '苹果')]
-    case IOS = 2;
+    case IOS = 'ios';
 
     #[EnumMessage(message: '苹果书签')]
-    case IOS_BOOKMARK = 3;
-
-    #[EnumMessage(message: 'h5')]
-    case PWA = 5;
+    case IOS_BOOKMARK = 'ios_bookmark';
 }

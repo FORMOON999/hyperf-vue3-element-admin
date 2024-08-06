@@ -12,47 +12,75 @@ declare(strict_types=1);
 
 namespace App\Common\Util\Upload\Helper;
 
-use App\Common\Util\Upload\Enums\UploadType;
-use App\Common\Util\Upload\UploadFactory;
-use App\Common\Util\Upload\UploadInterface;
+use App\Common\Helpers\FormatHelper;
+use App\Common\Helpers\RegularHelper;
+use App\Common\Util\IPC\Helper\SysConfigHelper;
 use Hyperf\Di\Annotation\Inject;
 
-class ImageHelper implements UploadInterface
+class ImageHelper
 {
+    public const KEY = '864134';
+
     #[Inject]
-    protected UploadFactory $uploadFactory;
+    protected SysConfigHelper $config;
 
-    protected UploadInterface $uploader;
-
-    public function __construct()
+    public function makePath(string $key, string $host = ''): string
     {
-        if (! empty($this->uploadFactory)) {
-            $this->uploader = $this->uploadFactory->make(UploadType::ALI());
+        if (empty($key)) {
+            return $key;
         }
+        if (RegularHelper::checkUrl($key)) {
+            return $key;
+        }
+        return rtrim($host, "\t\n\r\0\x0B/") . '/' . ltrim($key, '/');
     }
 
-    public function makeImageUrl(string $path): string
+    public function makeLocalPath(string $key): string
     {
-        return $path ? $this->uploader->makeImagePath($path) : $path;
+        return $this->makePath($key, $this->config->get("imageDomain"));
     }
 
-    public function getToken(string $key)
+    public function encrypt(string $file, bool $saveOld = false): bool
     {
-        return $this->uploader->getToken($key);
+        if (! is_file($file)) {
+            return false;
+        }
+        $count = strlen(self::KEY);
+        $content = file_get_contents($file);
+        if ($saveOld) {
+            $oldFile = $this->getOldFile($file);
+            @file_put_contents($oldFile, $content);
+        }
+        for ($i = 0; $i < 100; ++$i) {
+            $byteValue = ord($content[$i]);
+            $byteValue ^= self::KEY[$i % $count];
+            $content[$i] = chr($byteValue);
+        }
+        @file_put_contents($file, $content);
+        return true;
     }
 
-    public function uploadFile(string $path, string $file)
+    public function getOldFile(string $file): string
     {
-        return $this->uploader->uploadFile($path, $file);
+        $info = explode('.', $file);
+        $info[0] .= '-old';
+        return implode('.', $info);
     }
 
-    public function remove(string $path): bool
+    public function encrypt2(string $file, bool $saveOld = false): bool
     {
-        return $this->uploader->remove($path);
+        if (!is_file($file)) {
+            return false;
+        }
+        $content = file_get_contents($file);
+        if ($saveOld) {
+            $oldFile = $this->getOldFile($file);
+            @file_put_contents($oldFile, $content);
+        }
+        $content = FormatHelper::randNum(3) . $content;
+        @file_put_contents($file, $content);
+        return true;
     }
 
-    public function has(string $path): bool
-    {
-        return $this->uploader->has($path);
-    }
+
 }

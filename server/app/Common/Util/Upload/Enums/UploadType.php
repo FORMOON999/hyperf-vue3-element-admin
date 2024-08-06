@@ -26,20 +26,20 @@ enum UploadType: string
     /**
      * @Message("本地")
      */
-    case LOCAL = 'local';
+    case Local = 'local';
 
     /**
      * @Message("阿里云Oss")
      */
-    case ALI = 'aliyun';
+    case Ali = 'aliyun';
 
     /**
      * @Message("腾讯云Oss")
      */
-    case TENCENT = 'tencent';
+    case Tencent = 'tencent';
 
     /**
      * @Message("七牛云OSss")
      */
-    case qiniu = 'qiniu';
+    case Qiniu = 'qiniu';
 }

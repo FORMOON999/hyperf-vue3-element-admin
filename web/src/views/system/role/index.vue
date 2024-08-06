@@ -12,10 +12,14 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="handleQuery"
-            ><i-ep-search />搜索</el-button
-          >
-          <el-button @click="handleResetQuery"><i-ep-refresh />重置</el-button>
+          <el-button type="primary" @click="handleQuery">
+            <i-ep-search />
+            搜索
+          </el-button>
+          <el-button @click="handleResetQuery">
+            <i-ep-refresh />
+            重置
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -33,8 +37,10 @@
           type="danger"
           :disabled="ids.length === 0"
           @click="handleDelete()"
-          ><i-ep-delete />删除</el-button
         >
+          <i-ep-delete />
+          删除
+        </el-button>
       </template>
 
       <el-table
@@ -67,7 +73,8 @@
               link
               @click="handleOpenAssignPermDialog(scope.row)"
             >
-              <i-ep-position />分配权限
+              <i-ep-position />
+              分配权限
             </el-button>
             <el-button
               v-hasPerm="['sys:role:edit']"
@@ -76,7 +83,8 @@
               link
               @click="handleOpenDialog(scope.row.id)"
             >
-              <i-ep-edit />编辑
+              <i-ep-edit />
+              编辑
             </el-button>
             <el-button
               v-hasPerm="['sys:role:delete']"
@@ -85,7 +93,8 @@
               link
               @click="handleDelete(scope.row.id)"
             >
-              <i-ep-delete />删除
+              <i-ep-delete />
+              删除
             </el-button>
           </template>
         </el-table-column>
@@ -165,14 +174,16 @@
         </el-input>
 
         <div class="flex-center">
-          <el-button type="primary" size="small" plain @click="togglePermTree"
-            ><i-ep-switch />{{ isExpanded ? "收缩" : "展开" }}</el-button
-          >
+          <el-button type="primary" size="small" plain @click="togglePermTree">
+            <i-ep-switch />
+            {{ isExpanded ? "收缩" : "展开" }}
+          </el-button>
           <el-checkbox
             v-model="parentChildLinked"
             @change="handleparentChildLinkedChange"
             class="ml-5"
-            >父子联动
+          >
+            父子联动
           </el-checkbox>
 
           <el-tooltip placement="bottom">
@@ -203,9 +214,9 @@
 
       <template #footer>
         <div class="dialog-footer">
-          <el-button type="primary" @click="handleAssignPermSubmit"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="handleAssignPermSubmit">
+            确 定
+          </el-button>
           <el-button @click="assignPermDialogVisible = false">取 消</el-button>
         </div>
       </template>
@@ -285,6 +296,7 @@ function handleQuery() {
       loading.value = false;
     });
 }
+
 /** 重置查询 */
 function handleResetQuery() {
   queryFormRef.value.resetFields();
@@ -440,7 +452,7 @@ function togglePermTree() {
   }
 }
 
-/** 权限筛选  */
+/** 权限筛选 */
 watch(permKeywords, (val) => {
   permTreeRef.value!.filter(val);
 });
