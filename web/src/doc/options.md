@@ -36,16 +36,5 @@
 
 ```vue
   ....
-
-  <el-form-item label="xxx" prop="xxx">
-    <el-select v-model="formData.xxxx" placeholder="请选择">
-      <el-option
-        v-for="item in xxxxOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      />
-    </el-select>
-  </el-form-item>
-
+    <dictionary v-model="formData.xxx" :options="xxxxOptions" />
 ```
