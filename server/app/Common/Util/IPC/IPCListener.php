@@ -24,7 +24,6 @@ use Hyperf\Framework\Event\OnPipeMessage;
 use Hyperf\Process\Event\PipeMessage as UserProcessPipeMessage;
 use Psr\Container\ContainerInterface;
 
-// ipc config listener
 #[Listener]
 class IPCListener implements ListenerInterface
 {

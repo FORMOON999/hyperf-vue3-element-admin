@@ -72,15 +72,19 @@ class Auth extends Migration
                 ['id' => 3, 'parent_id' => 2, 'name' => '管理员新增', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:platform:add', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 4, 'parent_id' => 2, 'name' => '管理员编辑', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:platform:edit', 'sort' => 2, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 5, 'parent_id' => 2, 'name' => '管理员删除', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:platform:delete', 'sort' => 3, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
-                ['id' => 6, 'parent_id' => 1, 'name' => '角色管理', 'type' => MenuType::MENU, 'path' => 'system/role', 'component' => 'system/role/index', 'perm' => '', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => 'role', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
+                ['id' => 6, 'parent_id' => 1, 'name' => '角色管理', 'type' => MenuType::MENU, 'path' => 'system/role', 'component' => 'system/role/index', 'perm' => '', 'sort' => 2, 'visible' => BaseStatus::NORMAL, 'icon' => 'role', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 7, 'parent_id' => 6, 'name' => '角色新增', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:role:add', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 8, 'parent_id' => 6, 'name' => '角色编辑', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:role:edit', 'sort' => 2, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 9, 'parent_id' => 6, 'name' => '角色删除', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:role:delete', 'sort' => 3, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 10, 'parent_id' => 6, 'name' => '分配权限', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:role:permission', 'sort' => 4, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
-                ['id' => 11, 'parent_id' => 1, 'name' => '菜单管理', 'type' => MenuType::MENU, 'path' => 'system/menu', 'component' => 'system/menu/index', 'perm' => '', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => 'menu', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
+                ['id' => 11, 'parent_id' => 1, 'name' => '菜单管理', 'type' => MenuType::MENU, 'path' => 'system/menu', 'component' => 'system/menu/index', 'perm' => '', 'sort' => 3, 'visible' => BaseStatus::NORMAL, 'icon' => 'menu', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 12, 'parent_id' => 11, 'name' => '菜单新增', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:menu:add', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 13, 'parent_id' => 11, 'name' => '菜单编辑', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:menu:edit', 'sort' => 2, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
                 ['id' => 14, 'parent_id' => 11, 'name' => '菜单删除', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:menu:delete', 'sort' => 3, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
+                ['id' => 15, 'parent_id' => 1, 'name' => '系统配置', 'type' => MenuType::MENU, 'path' => 'system/config', 'component' => 'system/config/index', 'perm' => '', 'sort' => 4, 'visible' => BaseStatus::NORMAL, 'icon' => 'setting', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
+                ['id' => 16, 'parent_id' => 15, 'name' => '配置新增', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:config:add', 'sort' => 1, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
+                ['id' => 17, 'parent_id' => 15, 'name' => '配置编辑', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:config:edit', 'sort' => 2, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
+                ['id' => 18, 'parent_id' => 15, 'name' => '配置删除', 'type' => MenuType::BUTTON, 'path' => '', 'component' => '', 'perm' => 'sys:config:delete', 'sort' => 3, 'visible' => BaseStatus::NORMAL, 'icon' => '', 'redirect' => '', 'created_at' => $date, 'updated_at' => $date],
             ]);
         }
 
@@ -92,7 +96,7 @@ class Auth extends Migration
                 $table->integer('menu_id')->default(0)->comment('菜单ID');
             });
             $roleMenu = [];
-            for ($i = 1; $i <= 14; ++$i) {
+            for ($i = 1; $i <= 18; ++$i) {
                 $roleMenu[] = ['role_id' => 1, 'menu_id' => $i, 'created_at' => $date, 'updated_at' => $date];
             }
             Db::table('role_menu')->insert($roleMenu);

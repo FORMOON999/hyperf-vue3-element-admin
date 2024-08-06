@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of Hyperf.
  *
@@ -9,6 +10,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 use App\Common\Constants\BaseStatus;
 use App\Common\Helpers\PasswordHelper;
 use App\Common\Traits\MigrateFiledTrait;
@@ -26,7 +28,9 @@ class Platform extends Migration
      */
     public function up(): void
     {
-        if (! Schema::hasTable('platform')) {
+        $date = date('Y-m-d H:i:s');
+
+        if (!Schema::hasTable('platform')) {
             Schema::create('platform', function (Blueprint $table) {
                 $this->commonFields($table);
                 $table->comment('管理员');
@@ -39,7 +43,6 @@ class Platform extends Migration
                 $table->dateTime('last_time')->nullable()->comment('上次登录时间');
             });
 
-            $date = date('Y-m-d H:i:s');
             Db::table('platform')->insert([
                 'username' => 'admin',
                 'role_id' => json_encode([1]),
@@ -47,6 +50,37 @@ class Platform extends Migration
                 'status' => BaseStatus::NORMAL,
                 'created_at' => $date,
                 'updated_at' => $date,
+            ]);
+        }
+
+        if (!Schema::hasTable('config')) {
+            Schema::create('config', function (Blueprint $table) {
+                $this->commonFields($table);
+                $table->comment('系统配置');
+
+                $table->string('name', 32)->comment('配置名称');
+                $table->string('description', 255)->comment('描述');
+                $table->string('key', 64)->comment('配置键');
+                $table->text('value')->comment('配置值');
+            });
+
+            Db::table('config')->insert([
+                [
+                    'name' => '本地上传',
+                    'description' => '本地上传配置',
+                    'key' => 'localOss',
+                    'value' => '{"bucket": "public"}',
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                ],
+                [
+                    'name' => '图片域名',
+                    'description' => '图片域名',
+                    'key' => 'imageDomain',
+                    'value' => 'http://127.0.0.1:9501',
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                ]
             ]);
         }
     }
@@ -58,6 +92,7 @@ class Platform extends Migration
     {
         $tables = [
             'platform',
+            'config'
         ];
         foreach ($tables as $table) {
             Schema::dropIfExists($table);

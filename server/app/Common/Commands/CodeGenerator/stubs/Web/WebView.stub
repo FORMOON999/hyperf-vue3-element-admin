@@ -148,9 +148,7 @@ const dialog = reactive({
   visible: false,
 });
 // %COMMENT%表单数据
-const formData = reactive<%DEFINE%Form>({
-  status: 1,
-});
+const formData = reactive<%DEFINE%Form>({});
 
 const rules = reactive({
 %RULE%

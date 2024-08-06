@@ -3,14 +3,15 @@
 namespace App\Common\Util\IPC\Helper;
 
 use Hyperf\Contract\ConfigInterface;
-use Hyperf\Di\Annotation\Inject;
 
 class SysConfigHelper
 {
     public const CONFIG_KEY = 'sysConfig';
 
-    #[Inject]
-    protected ConfigInterface $config;
+    public function __construct(protected ConfigInterface $config)
+    {
+
+    }
 
     public function get(string $key, mixed $default = null): mixed
     {
@@ -29,7 +30,7 @@ class SysConfigHelper
 
     public function getAll(): array
     {
-        return $this->config->get(self::CONFIG_KEY);
+        return $this->config->get(self::CONFIG_KEY, []);
     }
 
     public function key(): string

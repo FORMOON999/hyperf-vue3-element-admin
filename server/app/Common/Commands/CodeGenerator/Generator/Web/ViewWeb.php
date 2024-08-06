@@ -75,6 +75,9 @@ class ViewWeb extends BaseWeb
             }
             $key = FormatHelper::camelize($item['column_name']);
             $label = $item['column_comment'] ?: $key;
+            if ($key == 'id') {
+                $label = '序号';
+            }
             switch ($key) {
                 case 'status':
                     $html .= $this->rowStatus($label);
