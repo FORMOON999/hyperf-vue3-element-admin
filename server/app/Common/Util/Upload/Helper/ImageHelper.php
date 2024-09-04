@@ -35,39 +35,12 @@ class ImageHelper
         return rtrim($host, "\t\n\r\0\x0B/") . '/' . ltrim($key, '/');
     }
 
-    public function makeLocalPath(string $key): string
+    public function makePathBuyConfig(string $path, string $key = 'imageDomain'): string
     {
-        return $this->makePath($key, $this->config->get("imageDomain"));
+        return $this->makePath($path, $this->config->get($key));
     }
 
     public function encrypt(string $file, bool $saveOld = false): bool
-    {
-        if (! is_file($file)) {
-            return false;
-        }
-        $count = strlen(self::KEY);
-        $content = file_get_contents($file);
-        if ($saveOld) {
-            $oldFile = $this->getOldFile($file);
-            @file_put_contents($oldFile, $content);
-        }
-        for ($i = 0; $i < 100; ++$i) {
-            $byteValue = ord($content[$i]);
-            $byteValue ^= self::KEY[$i % $count];
-            $content[$i] = chr($byteValue);
-        }
-        @file_put_contents($file, $content);
-        return true;
-    }
-
-    public function getOldFile(string $file): string
-    {
-        $info = explode('.', $file);
-        $info[0] .= '-old';
-        return implode('.', $info);
-    }
-
-    public function encrypt2(string $file, bool $saveOld = false): bool
     {
         if (!is_file($file)) {
             return false;
@@ -82,5 +55,10 @@ class ImageHelper
         return true;
     }
 
-
+    public function getOldFile(string $file): string
+    {
+        $info = explode('.', $file);
+        $info[0] .= '-old';
+        return implode('.', $info);
+    }
 }

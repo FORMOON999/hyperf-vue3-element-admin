@@ -30,14 +30,13 @@ class UploadFactory
     #[Inject]
     protected SysConfigHelper $config;
 
-    public const MAP = [
-        UploadType::Local->value => UploadLocal::class,
-        UploadType::Ali->value => UploadOss::class,
-    ];
-
     public function make(UploadType $uploadType, ?array $config = null): UploadInterface
     {
-        $class = make(self::MAP[$uploadType->value]);
+        $className = match ($uploadType) {
+            UploadType::Local => UploadLocal::class,
+            UploadType::Ali => UploadOss::class,
+        };
+        $class = make($className);
         $config = $config ?? $this->config->get("{$uploadType->value}Oss", '');
         $uploadConfig = new UploadConfig(Json::decode($config));
         $class->loadConfig($uploadConfig);

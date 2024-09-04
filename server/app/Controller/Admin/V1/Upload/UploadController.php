@@ -55,7 +55,7 @@ class UploadController extends BaseController
 
         return new UploadResponse([
             'path' => $data['path'],
-            'url' => $this->imageHelper->makeLocalPath($data['path'])
+            'url' => $this->imageHelper->makePathBuyConfig($data['path'])
         ]);
     }
 }

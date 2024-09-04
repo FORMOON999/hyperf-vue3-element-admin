@@ -74,34 +74,42 @@ class ModelCacheBuilder extends ModelBuilder
     {
         $startTime = ArrayHelper::remove($data, 'start_time', '');
         $endTime = ArrayHelper::remove($data, 'end_time', '');
-        if (! empty($endTime)) {
+        if (!empty($endTime)) {
             $endTime .= ' 23:59:59';
         }
         if ($startTime && $endTime) {
             $this->query->whereBetween($field, [$startTime, $endTime]);
             return $this;
         }
+
         if ($startTime) {
             $this->query->where($field, '>=', $startTime);
         }
         if ($endTime) {
             $this->query->where($field, '<', $endTime);
         }
+
         return $this;
     }
 
-    public function whereLike(string $field, array &$data): ModelCacheBuilder
+    public function whereLike(string $field, array &$data, string $column = ''): ModelCacheBuilder
     {
-        $value = ArrayHelper::remove($data, $field, '');
+        if ($column == '') {
+            $column = $field;
+        }
+        $value = ArrayHelper::remove($data, $column, '');
         if ($value) {
             $this->query->where($field, 'like', $value . '%');
         }
         return $this;
     }
 
-    public function whereCondition(string $field, array &$data, string $operator = '='): ModelCacheBuilder
+    public function whereCondition(string $field, array &$data, string $operator = '=', string $column = ''): ModelCacheBuilder
     {
-        $value = ArrayHelper::remove($data, $field, '');
+        if ($column == '') {
+            $column = $field;
+        }
+        $value = ArrayHelper::remove($data, $column, '');
         if ($value) {
             $this->query->where($field, $operator, $value);
         }

@@ -37,7 +37,7 @@
         "hyperf/redis": "~3.1.0",
         "hyperf/signal": "~3.1.0",
         "hyperf/snowflake": "~3.1.0",
-        "sunsgne/hyperf-captcha": "^0.0.2",
+        "hashwallet/hyperf-captcha": "dev-master",
         "tangwei/apidocs": "*"
     },
     "require-dev": {
