@@ -18,7 +18,7 @@ class %CLASS% implements %INHERITANCE%
     public function getList(array $search, array $field = ['*'], array $withs = [], array $sort = [], array $page = []): Output
     {
         $query = $this->%MODEL_NAME%->buildQuery()
-            ->betweenTime('created_at', $search)
+            ->betweenDate('created_at', $search)
             ->whereSearch($search)
             ->sorts($sort)
             ->select($field);
