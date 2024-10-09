@@ -3,6 +3,7 @@
     v-model="selectedValue"
     :placeholder="placeholder"
     :disabled="disabled"
+    filterable
     clearable
     @change="handleChange"
   >
