@@ -37,7 +37,7 @@ class Platform extends Migration
 
                 $table->string('username', 32)->comment('账号');
                 $table->string('password', 64)->comment('密码');
-                $table->string('avatar', 255)->default('https://oss.youlai.tech/youlai-boot/2023/05/16/811270ef31f548af9cffc026dfc3777b.gif')->comment('头像');
+                $table->string('avatar', 255)->default('https://foruda.gitee.com/images/1723603502796844527/03cdca2a_716974.gif')->comment('头像');
                 $table->json('role_id')->comment('角色');
                 $table->tinyInteger('status')->comment('状态');
                 $table->dateTime('last_time')->nullable()->comment('上次登录时间');
