@@ -101,19 +101,21 @@ enum DateType: int
      */
     public static function getLastStartAt(DateType $type, int $startAt): int
     {
-        return match ($type) {
-            self::DAILY => $startAt - DateHelper::DAY,
-            self::WEEKLY => $startAt - DateHelper::DAY * 7,
-            self::MONTHLY => function () use ($startAt) {
+        switch ($type) {
+            case DateType::DAILY:
+                return $startAt - DateHelper::DAY;
+            case DateType::WEEKLY:
+                return $startAt - DateHelper::DAY * 7;
+            case DateType::MONTHLY:
                 $datetime = new DateTime(date('Ym01', $startAt));
                 return $datetime->modify('first day of last month')->getTimestamp();
-            },
-            self::YEARLY => function () use ($startAt) {
+            case DateType::YEARLY:
                 $datetime = new DateTime(date('Ym01', $startAt));
                 return $datetime->modify('first day of last year')->getTimestamp();
-            },
-            default => 0,
-        };
+            case DateType::HOURS:
+                return $startAt - DateHelper::HOUR;
+        }
+        return 0;
     }
 
     public static function isToday(DateType $type, int $date): bool
